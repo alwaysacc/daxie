@@ -35,7 +35,7 @@
         </el-menu>
     </el-col>
     </el-row>
-    <div class="center">
+    <div class="centers">
     <el-container>
       <el-aside width="200px">
         <el-menu
@@ -63,8 +63,7 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
-        <el-main>Main</el-main>
+        <el-main><router-view></router-view></el-main>
       </el-container>
     </el-container>
     </div>
@@ -96,7 +95,7 @@ export default {
   height:100%;
   width: 100%;
 }
-.center{
+.centers{
   padding-left: 20%;
   padding-right: 20%;
 }
