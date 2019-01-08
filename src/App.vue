@@ -63,22 +63,21 @@
         </el-menu>
 </div>
 
-<div  style="width:70%;height: auto">
-
-  <p>2018年总结以及2019年计划</p>
-
+<div  style="width:70%;height: auto;float: left">
+  <h3>2018年总结以及2019年计划</h3>
   <el-row>
-    <el-col  :span="20">
+    <el-col  :span="24">
       <span :class="{'con-art':seeall}">{{content}}</span>
-      <span @click='seeAll' v-if='content.length>600'>{{seeall?'查看全文':'收起'}}</span>
     </el-col>
+    <span @click='seeAll'>{{seeall?'查看全文':'收起'}}</span>
+    <el-row>
+      <el-col :span="5"><a href="#">点赞</a></el-col>
+      <el-col :span="5" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
+      <el-col :span="5"><a href="#">分享</a> </el-col>
+      <el-col :span="5"><a href="#">收藏</a> </el-col>
+    </el-row>
   </el-row>
-  <el-row>
-    <el-col :span="5"><a href="#">点赞</a></el-col>
-    <el-col :span="5" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
-    <el-col :span="5"><a href="#">分享</a> </el-col>
-    <el-col :span="5"><a href="#">收藏</a> </el-col>
-  </el-row>
+<!--
   <div v-if="show">
     <el-row>
       <el-col :span="4">55条评论</el-col>
@@ -95,10 +94,11 @@
       </el-row>
     </div>
   </div>
+  -->
 </div>
 
 <div style="width:10%;float:right">
-        1
+111
 </div>
 
 
@@ -159,7 +159,6 @@ export default {
   }
 
 }
-
 
 </script>
 
