@@ -37,7 +37,7 @@
     </el-row>
     <div class="centers">
 
-<div  style="width: 10%;float: left;" >
+<div class="left">
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
@@ -63,7 +63,7 @@
         </el-menu>
 </div>
 
-<div  style="width:70%;height: auto;float: left">
+<div class="center-div">
   <h3>2018年总结以及2019年计划</h3>
   <el-row>
     <el-col  :span="24">
@@ -97,8 +97,12 @@
   -->
 </div>
 
-<div style="width:10%;float:right">
-111
+<div class="right">
+  <el-row>
+    <el-col :span="8"><i class="el-icon-circle-plus-outline"/><br/>发帖 </el-col>
+    <el-col :span="8"><i class="el-icon-circle-plus-outline"/><br/>发帖 </el-col>
+    <el-col :span="8"><i class="el-icon-circle-plus-outline"/><br/>发帖 </el-col>
+  </el-row>
 </div>
 
 
@@ -164,12 +168,17 @@ export default {
 
 <style>
 #app {
+
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   font-size: 16px;
+  width: 100%;
+  height: 100%;
+  background-color: #F6F6F6;
+  position: fixed;
 }
 .el-menu-demo{
   padding-left: 20%;
@@ -181,10 +190,7 @@ export default {
   height:100%;
   width: 100%;
 }
-.centers{
-  padding-left: 20%;
-  padding-right: 20%;
-}
+
 .con-art {
   height: 80px;
   overflow: hidden;
@@ -193,4 +199,27 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+.centers{
+  padding-left: 20%;
+  padding-right: 20%;
+  height: 100%;
+  margin-top: 10px;
+}
+.left{
+  width: 10%;float: left;
+  height: 100%;
+  background-color: white;
+  padding: 0 5px;
+}
+.center-div{
+  width:70%;height: auto;float: left;
+  background-color: white;
+  margin-left: 10px;
+  padding: 0 10px;
+}
+  .right{
+
+    width:10%;float:right;
+    margin-top: 20px;
+  }
 </style>
