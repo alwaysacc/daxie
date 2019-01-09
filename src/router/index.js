@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import notice from '@/components/notice'
+import home from '../components/home'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'notice',
-      component: notice
+      name: 'home',
+      component: home
     }
   ]
 })
