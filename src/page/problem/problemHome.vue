@@ -5,12 +5,15 @@
       <div class="lefts">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" value="first">
         <el-tab-pane label="推荐" name="first">
-          <div>
+          <div class="wenti">
             <el-row >
               <el-col :span="10">
-              <p >为什么语言里要提供“反射”功能？</p></el-col>
+              <h3>为什么语言里要提供“反射”功能？</h3>
+              </el-col>
             </el-row>
-            <el-row :span="20"><p >为什么需要反射，这不是破坏了封装吗?</p></el-row>
+            <el-row >
+              <el-col :span="10">  <p >为什么需要反射，这不是破坏了封装吗?</p></el-col>
+            </el-row>
             <el>
               <el-col :span="4">浏览：5555</el-col>
               <el-col  :span="4">回答：4444</el-col>
@@ -23,12 +26,9 @@
       </el-tabs>
       </div>
       <div class="rights">
-        <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
-          <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-          <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-          <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-        </el-tabs>
+       <el-row>
+         <el-col></el-col>
+       </el-row>
       </div>
     </div>
     <y-footer></y-footer>
@@ -74,5 +74,10 @@ export default {
   .rights{
     float: left;
     width: 20%;
+  }
+  .wenti{
+    height: 200px;
+    background-color: white;
+    border-bottom: darkgrey solid 1px;
   }
 </style>
