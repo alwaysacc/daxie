@@ -12,7 +12,7 @@
           active-text-color="#FF0000">
           <el-menu-item index="1" >logo</el-menu-item>
           <el-menu-item index="2"><router-link to="/">首页</router-link></el-menu-item>
-          <el-menu-item index="3">问答</el-menu-item>
+          <el-menu-item index="3"><router-link to="/problemHome">问答</router-link></el-menu-item>
 
           <el-row type="flex" align="middle" class="login">
             <el-col>
@@ -46,16 +46,17 @@ export default {
 <style scoped>
   .el-menu-demo {
     padding-left: 20%;
+    padding-right: 20%;
   }
   el-menu-item{
     font-size: 30px;
 
   }
   .login{
-    padding-right: 20%;
+
   }
   .login img{
-    height:100%;
+    height:50%;
     width: 100%;
   }
 </style>

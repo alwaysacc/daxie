@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import home from '../page/home'
 import login from '../page/login'
 import register from '../page/register'
-import head from '../components/head'
+import articleDetails from '../page/article/articleDetails'
+import problemHome from '../page/problem/problemHome'
 Vue.use(Router)
 
 export default new Router({
@@ -14,9 +15,14 @@ export default new Router({
       component: home
     },
     {
-      path: '/',
-      name: 'head',
-      component: head
+      path: '/articleDetails',
+      name: 'articleDetails',
+      component: articleDetails
+    },
+    {
+      path: '/problemHome',
+      name: 'problemHome',
+      component: problemHome
     },
     {
       path: '/login',

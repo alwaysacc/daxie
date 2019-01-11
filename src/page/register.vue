@@ -3,7 +3,7 @@
   <y-header></y-header>
   <div class="center-div">
     <el-tabs v-model="activeName" @tab-click="handleClick"  type="card" stretch="true">
-      <el-tab-pane label="用户登录" name="first">
+      <el-tab-pane label="注册账号" name="first">
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
           <el-form-item label="用户名" prop="name">
             <el-input type="text" v-model="ruleForm2.name" autocomplete="off"></el-input>
@@ -63,13 +63,13 @@ export default {
       }
     }
     return {
+      activeName: 'first',
+      radio: '0',
       ruleForm2: {
         name: '',
         email: '',
         password: '',
-        code: '',
-        radio: '1',
-        activeName: 'first'
+        code: ''
       },
       rules2: {
         name: [
@@ -104,6 +104,9 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    handleClick () {
+      console.log(this.activeName)
     }
   }
 

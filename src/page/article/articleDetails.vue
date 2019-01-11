@@ -1,18 +1,25 @@
 <template>
-  <div id="app">
-    <router-view ></router-view>
+  <div id="articleDetails">
+    <y-header></y-header>
+
+    <y-footer></y-footer>
   </div>
 </template>
 
 <script>
+import YHeader from '@/components/head'
+import YFooter from '@/components/footer'
 export default {
-  name: 'App'
+  name: 'articleDetails',
+  components: {
+    YHeader,
+    YFooter
+  }
 }
-
 </script>
 
 <style scoped>
-  #app {
+  #articleDetails{
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -20,9 +27,7 @@ export default {
     color: #2c3e50;
     font-size: 16px;
     width: 100%;
-
-    overflow-y:auto;
-    overflow-x: hidden;
+    background-color: #F6F6F6;
   }
 
 </style>

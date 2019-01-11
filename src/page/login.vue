@@ -59,12 +59,12 @@ export default {
       }
     };
     return {
+      activeName: 'first',
+      radio: '1',
       ruleForm2: {
         pass: '',
         checkPass: '',
-        age: '',
-        radio: '1',
-        activeName: 'first'
+        age: ''
       },
       rules2: {
         pass: [
