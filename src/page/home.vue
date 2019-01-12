@@ -45,7 +45,6 @@
             <el-col  :span="24">
               <span :class="{'con-art':seeall}">
                 <div  v-html="content">
-
                 </div>
               </span>
             </el-col>
@@ -58,183 +57,79 @@
             <el-col :span="6"><a href="#">分享</a> </el-col>
             <el-col :span="6"><a href="#">收藏</a> </el-col>
           </el-row>
+          <div v-if="show" class="comment-div">
+            <el-row class="comment">
+            <el-col :span="2"><a>评论</a></el-col>
+          </el-row>
 
-          <div v-if="show" style="border: #EBEBEB solid 1px; margin-top: 20px; padding-bottom: 10px;">
-            <el-row style="height:40px;line-height: 40px;background-color: #EBEBEB">
-              <el-col :span="4" style="font-weight:bold;">55条评论</el-col>
-              <el-col :span="4" style="float: right">切换排序</el-col>
-            </el-row>
-            <div style="border-bottom: #EBEBEB solid 1px; padding: 10px 0">
-              <el-row style="height:40px;line-height: 40px">
-                <el-col :span="4"><img src="../image/img.jpg"> hhhh</el-col>
-                <el-col :span="4" style="float: right">刚刚</el-col>
-              </el-row>
-              <el-row style="height:20px;line-height: 20px">
-                <el-col :span="4" style="float:left;padding-left: 50px">牛逼牛逼 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="3" style="float:left;padding-left: 50px"><a>点赞</a></el-col>
-              </el-row>
+            <div class="comment-border">
+            <div class="comment-div-left">
+              <img src="@/image/img.jpg"/>
             </div>
-            <div style="border-bottom: #EBEBEB solid 1px; padding: 10px 0">
-              <el-row style="height:40px;line-height: 40px">
-                <el-col :span="4"><img src="../image/img.jpg">hhhh</el-col>
-                <el-col :span="4" style="float: right">刚刚</el-col>
+            <div >
+            <div class="comment-div-right">
+              <el-row class="a">
+                <el-col>
+                  <a style="font-weight: bold">哈哈哈哈</a></el-col>
               </el-row>
-              <el-row style="height:20px;line-height: 20px">
-                <el-col :span="4" style="float:left;padding-left: 50px">牛逼牛逼 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="3" style="float:left;padding-left: 50px"><a>点赞</a></el-col>
-              </el-row>
-            </div>
-            <div style="margin-top: 10px;width: 100%">
-              <el-row>
-                <el-col :span="input">
-                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
-                </el-col>
-                <el-col :span="butt">
-                  <el-button type="primary" v-if="button">提交</el-button>
+              <el-row class="a">
+                <el-col>
+                  <a>牛逼牛逼牛逼牛逼</a>
                 </el-col>
               </el-row>
+              <el-row class="a sjdiv">
+                <a>2019年1月12日18:08:50</a>
+                <a class="dianzan">回复</a>
+                <a class="dianzan">点赞</a>
+              </el-row>
             </div>
-          </div>
+
+            </div>
+              <div style="clear:both"></div>
+
+            </div>
+            <div class="comment-border">
+              <div class="comment-div-left">
+                <img src="@/image/img.jpg"/>
+              </div>
+              <div >
+                <div class="comment-div-right">
+                  <el-row class="a">
+                    <el-col>
+                      <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                  </el-row>
+                  <el-row class="a">
+                    <el-col>
+                      <a>牛逼牛逼牛逼牛逼</a>
+                    </el-col>
+                  </el-row>
+                  <el-row class="a sjdiv">
+                    <a>2019年1月12日18:08:50</a>
+                    <a class="dianzan">回复</a>
+                    <a class="dianzan">点赞</a>
+                  </el-row>
+                </div>
+
+              </div>
+              <div style="clear:both"></div>
+
+            </div>
+
+            </div>
+              <div class="comment-input">
+                <el-row>
+                  <el-col :span="input">
+                    <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                  </el-col>
+                  <el-col :span="butt">
+                    <el-button type="primary" v-if="button">提交</el-button>
+                  </el-col>
+                </el-row>
+              </div>
+
+
+
         </div>
-        <div class="tiezi">
-          <el-row>
-            <el-col> <h3>2018年总结以及2019年计划</h3></el-col>
-          </el-row>
-          <div class="zuozhe" v-if="isZuozhe">
-            <el-row>
-              <el-col><img src="../image/img.jpg"/> 说。</el-col>
-            </el-row>
-            <el-row class="liulan">
-              <el-col>1111人浏览</el-col>
-            </el-row>
-          </div>
-          <el-row>
-            <el-col  :span="24">
-              <span :class="{'con-art':seeall}">{{content}}</span>
-            </el-col>
-
-            <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
-          </el-row>
-          <el-row>
-            <el-col :span="6"><a href="#">点赞</a></el-col>
-            <el-col :span="6" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
-            <el-col :span="6"><a href="#">分享</a> </el-col>
-            <el-col :span="6"><a href="#">收藏</a> </el-col>
-          </el-row>
-
-          <div v-if="show" style="border: #EBEBEB solid 1px; margin-top: 20px; padding-bottom: 10px;">
-            <el-row style="height:40px;line-height: 40px;background-color: #EBEBEB">
-              <el-col :span="4" style="font-weight:bold;">55条评论</el-col>
-              <el-col :span="4" style="float: right">切换排序</el-col>
-            </el-row>
-            <div style="border-bottom: #EBEBEB solid 1px; padding: 10px 0">
-              <el-row style="height:40px;line-height: 40px">
-                <el-col :span="4"><img src="../image/img.jpg"> hhhh</el-col>
-                <el-col :span="4" style="float: right">刚刚</el-col>
-              </el-row>
-              <el-row style="height:20px;line-height: 20px">
-                <el-col :span="4" style="float:left;padding-left: 50px">牛逼牛逼 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="3" style="float:left;padding-left: 50px"><a>点赞</a></el-col>
-              </el-row>
-            </div>
-            <div style="border-bottom: #EBEBEB solid 1px; padding: 10px 0">
-              <el-row style="height:40px;line-height: 40px">
-                <el-col :span="4"><img src="../image/img.jpg">hhhh</el-col>
-                <el-col :span="4" style="float: right">刚刚</el-col>
-              </el-row>
-              <el-row style="height:20px;line-height: 20px">
-                <el-col :span="4" style="float:left;padding-left: 50px">牛逼牛逼 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="3" style="float:left;padding-left: 50px"><a>点赞</a></el-col>
-              </el-row>
-            </div>
-            <div style="margin-top: 10px;width: 100%">
-              <el-row>
-                <el-col :span="input">
-                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
-                </el-col>
-                <el-col :span="butt">
-                  <el-button type="primary" v-if="button">提交</el-button>
-                </el-col>
-              </el-row>
-            </div>
-          </div>
-        </div>
-        <div class="tiezi">
-          <el-row>
-            <el-col> <h3>2018年总结以及2019年计划</h3></el-col>
-          </el-row>
-          <div class="zuozhe" v-if="isZuozhe">
-            <el-row>
-              <el-col><img src="../image/img.jpg"/> 说。</el-col>
-            </el-row>
-            <el-row class="liulan">
-              <el-col>1111人浏览</el-col>
-            </el-row>
-          </div>
-          <el-row>
-            <el-col  :span="24">
-              <span :class="{'con-art':seeall}">{{content}}</span>
-            </el-col>
-
-            <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
-          </el-row>
-          <el-row>
-            <el-col :span="6"><a href="#">点赞</a></el-col>
-            <el-col :span="6" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
-            <el-col :span="6"><a href="#">分享</a> </el-col>
-            <el-col :span="6"><a href="#">收藏</a> </el-col>
-          </el-row>
-
-          <div v-if="show" style="border: #EBEBEB solid 1px; margin-top: 20px; padding-bottom: 10px;">
-            <el-row style="height:40px;line-height: 40px;background-color: #EBEBEB">
-              <el-col :span="4" style="font-weight:bold;">55条评论</el-col>
-              <el-col :span="4" style="float: right">切换排序</el-col>
-            </el-row>
-            <div style="border-bottom: #EBEBEB solid 1px; padding: 10px 0">
-              <el-row style="height:40px;line-height: 40px">
-                <el-col :span="4"><img src="../image/img.jpg"> hhhh</el-col>
-                <el-col :span="4" style="float: right">刚刚</el-col>
-              </el-row>
-              <el-row style="height:20px;line-height: 20px">
-                <el-col :span="4" style="float:left;padding-left: 50px">牛逼牛逼 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="3" style="float:left;padding-left: 50px"><a>点赞</a></el-col>
-              </el-row>
-            </div>
-            <div style="border-bottom: #EBEBEB solid 1px; padding: 10px 0">
-              <el-row style="height:40px;line-height: 40px">
-                <el-col :span="4"><img src="../image/img.jpg">hhhh</el-col>
-                <el-col :span="4" style="float: right">刚刚</el-col>
-              </el-row>
-              <el-row style="height:20px;line-height: 20px">
-                <el-col :span="4" style="float:left;padding-left: 50px">牛逼牛逼 </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="3" style="float:left;padding-left: 50px"><a>点赞</a></el-col>
-              </el-row>
-            </div>
-            <div style="margin-top: 10px;width: 100%">
-              <el-row>
-                <el-col :span="input">
-                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
-                </el-col>
-                <el-col :span="butt">
-                  <el-button type="primary" v-if="button">提交</el-button>
-                </el-col>
-              </el-row>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <div class="right">
@@ -434,5 +329,48 @@ export default{
   }
   ::-webkit-scrollbar{
     width:0;
+  }
+  .comment-div{
+    height: auto;
+    overflow: hidden;
+    padding-top: 50px;
+  }
+  .comment{
+    padding-bottom: 20px;
+  }
+  .comment a{
+    font-weight: bold;
+  }
+  .comment-div-left{
+    float: left;
+    height: 50px;
+    width: 5%;
+    line-height: 50px;
+  }
+  .comment-div-right{
+    float: left;
+    width: 95%
+  }
+
+  .comment-div-right .a{
+    float: left;
+    text-align: left;
+    margin-top: 10px;
+    width: 100%;
+  }
+  .dianzan{
+    float: right;
+    margin-right: 20px;
+  }
+  .sjdiv a{
+    font-size: 13px;
+    color: darkgrey;
+  }
+  .comment-border{
+    padding-bottom: 5px;
+    border-bottom: darkgrey solid 1px;
+  }
+  .comment-input{
+    padding-top: 30px;
   }
 </style>
