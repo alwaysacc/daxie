@@ -26,7 +26,7 @@
         </div>
         <div class="comment-div">
           <el-row class="comment">
-            <el-col :span="1"><a>评论</a></el-col>
+            <el-col :span="2"><a>评论</a></el-col>
           </el-row>
           <div class="comment-div-left">
             <img src="@/image/img.jpg"/>
@@ -69,7 +69,7 @@
         <div class="right-new">
           <el-row>
           <div class="biaoti">
-            <h4>最新文章</h4>
+            <a>最新文章</a>
           </div>
           </el-row>
           <el-row>
@@ -214,6 +214,7 @@ export default {
     font-weight:bold;
   }
   .right-new{
+    padding-top:10px;
     margin-top: 10px;
     background-color: white;
   }
@@ -221,7 +222,7 @@ export default {
     height: 30px;
     line-height: 30px;
   }
-  .biaoti h4{
+  .biaoti{
     border-radius:30px;
     margin: auto;
     height: 35px;
