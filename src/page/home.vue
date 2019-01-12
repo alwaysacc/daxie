@@ -31,7 +31,7 @@
         <div class="tiezi">
           <el-row>
             <router-link to="/articleDetails">
-            <el-col> <h3>2018年总结以及2019年计划</h3></el-col></router-link>
+            <el-col> <h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col></router-link>
           </el-row>
           <div class="zuozhe" v-if="isZuozhe">
             <el-row>
@@ -43,7 +43,11 @@
           </div>
           <el-row>
             <el-col  :span="24">
-              <span :class="{'con-art':seeall}">{{content}}</span>
+              <span :class="{'con-art':seeall}">
+                <div  v-html="content">
+
+                </div>
+              </span>
             </el-col>
 
             <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
@@ -277,37 +281,7 @@ export default{
       butt: 0,
       isButton: '0',
       isZuozhe: false,
-      content: '      2018总结\n' +
-      '      1.工作篇\n' +
-      '      2018是一个多窜的年份，为期一年多的努力，顺利的进入心目中的大厂，但是大厂的活计并没有想象中的那么如意，在大厂里始终是个螺丝钉，冒尖的可能性似乎需要年限来堆，期间又始终充满着期盼和失望\n' +
-      '      就我这一年学了一些基本的东西 非科班的我 将基础又重新拾掇了一遍花了我半年的时间，其他的时间将 前端，Java后台，C++的基础学了个大概能上手一些简单的东西（笑），并没有打算往全栈发展，还是想将整个脉络打通，真正核心的领域还是在Android移动端。\n' +
-      '\n' +
-      '      2.生活篇\n' +
-      '      这一年感觉到 “人活着真好”，生过一场病的人才懂得生命的可贵，在医院为期不间断的来回跑，现在我心里面对医院充满了排斥，人一胖什么病都跟着来了，这一年的瘦身计划楞是夭折在多次尝试后的反复折腾上，在学习上能坚持下来的唯独在减肥上屡尝屡败，我也是服了自己，希望今年能有所突破\n' +
-      '\n' +
-      '      3.娱乐篇\n' +
-      '      16年和17年的时候还专门跑到各处去玩，18年楞是没时间，醉了\n' +
-      '\n' +
-      '      2019年计划\n' +
-      '      1.工作篇\n' +
-      '      Android篇：\n' +
-      '      android打算往系统层深入，Android内核分析和Android深入理解系列，Android音视频方向是明年计划的重点，对于这方面的知识是学习的重点\n' +
-      '      Java篇：\n' +
-      '      Jdk源码系列完善下去，Java编程思想和Java并发，网络基础知识这些虽然看过了，但是还有很多需要完善\n' +
-      '\n' +
-      '      投资篇\n' +
-      '      投资理论\n' +
-      '      床头的书籍该好好系统学习了\n' +
-      '      该有理财 投资的概念\n' +
-      '\n' +
-      '      2.生活篇\n' +
-      '      健身：\n' +
-      '      实在坚持不下去那就报健身班，身体是革命的本钱，需要好好努力\n' +
-      '      原型:167的个 164的体重\n' +
-      '      目标:167的个 130的体重 理想身材\n' +
-      '\n' +
-      '      娱乐篇：\n' +
-      '      起码要去2-3个景点',
+      content : '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
       seeall: true,
       show: false,
       pl: true,
@@ -409,10 +383,11 @@ export default{
     background-color: white;
   }
   .biaoti{
-    border-radius:5px;
+    border-radius:30px;
     margin: auto;
-    height: 30px;
-    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    width: 80%;
     background-color: #FA7A1F ;
   }
   .right-bot .hot{
