@@ -68,7 +68,9 @@
         </div>
         <div class="right-new">
           <el-row>
+          <div class="biaoti">
             <h4>最新文章</h4>
+          </div>
           </el-row>
           <el-row>
             <el-col :span="24" class="right-new-col"><p  class="right-bottom-p">为什么语言里要提供“反射”功能？</p></el-col>
@@ -218,6 +220,14 @@ export default {
   .right-new-col{
     height: 30px;
     line-height: 30px;
+  }
+  .biaoti h4{
+    border-radius:30px;
+    margin: auto;
+    height: 35px;
+    line-height: 35px;
+    width: 80%;
+    background-color: #FA7A1F ;
   }
   .right-bottom-p{
     overflow: hidden;/*超出部分隐藏*/
