@@ -20,9 +20,8 @@ export default {
     color: #2c3e50;
     font-size: 16px;
     width: 100%;
-
-    overflow-y:auto;
-    overflow-x: hidden;
+    height:auto;
+    margin-bottom: 100px;
   }
 
 </style>

@@ -24,12 +24,13 @@
               ></el-autocomplete>
             </el-col>
             <el-col  :span="2">
-              <el-menu-item index="4" class="login"><img src="../image/notice.png"/></el-menu-item></el-col>
-            <el-col  :span="2">
-              <el-menu-item index="4" class="login"><router-link to="/login">登录</router-link></el-menu-item></el-col>
-            <el-col :span="2">
+              <el-menu-item index="4" class="login"><img class="xiaoxi" src="../image/notice.png"/></el-menu-item></el-col>
+            <el-col  :span="2" v-if="islogin">
+              <el-menu-item index="4" class="login"><router-link to="/login" >登录</router-link></el-menu-item></el-col>
+            <el-col :span="2"  v-if="islogin">
               <el-menu-item index="5" class="login"><router-link to="/register">注册</router-link></el-menu-item>
             </el-col>
+            <el-col :span="4" v-if="!islogin"> <router-link to="/userHome"><el-menu-item index="6" class="login"><img src="../image/img.jpg"/>aaa </el-menu-item></router-link></el-col>
           </el-row>
         </el-menu>
       </el-col>
@@ -39,7 +40,12 @@
 
 <script>
 export default {
-  name: 'head'
+  name: 'head',
+  data(){
+    return{
+      islogin:false
+    }
+  }
 }
 </script>
 
@@ -55,7 +61,7 @@ export default {
   .login{
 
   }
-  .login img{
+  .login .xiaoxi{
     height:50%;
     width: 100%;
   }

@@ -23,7 +23,8 @@ export default {
   padding: 20px 0;
   background-color: #ebebeb;
   width: 100%;
-  height:50px;position:fixed;bottom:0px;
+  height:50px;
+  position:fixed;bottom:0px;
 }
   .footer{
     padding-top: 10px;

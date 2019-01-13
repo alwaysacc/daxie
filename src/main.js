@@ -5,6 +5,12 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// 引用
+var E = require('wangeditor')  // 使用 npm 安装
+
+// 创建编辑器
+var editor = new E('#editor')
+editor.create()
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 /* eslint-disable no-new */

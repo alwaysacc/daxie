@@ -217,6 +217,7 @@ export default {
     padding-top:10px;
     margin-top: 10px;
     background-color: white;
+    height: 300px;
   }
   .right-new-col{
     height: 30px;

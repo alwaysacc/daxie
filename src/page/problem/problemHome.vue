@@ -8,7 +8,7 @@
           <div class="wenti">
             <el-row >
               <el-col :span="10">
-              <h3>为什么语言里要提供“反射”功能？</h3>
+              <router-link to="/problemDetails"><h3>为什么语言里要提供“反射”功能？</h3></router-link>
               </el-col>
             </el-row>
             <el-row class="font">
@@ -159,7 +159,7 @@
       <div class="rights">
         <div class="right-top">
        <el-row>
-         <el-col :span="24"> <el-button round size="medium" style="width: 80%;background-color:#FA7A1F;color: black"><i class="el-icon-edit-outline"></i>提问</el-button></el-col>
+         <el-col :span="24"> <router-link to="/addProblem"><el-button round size="medium" style="width: 80%;background-color:#FA7A1F;color: black"><i class="el-icon-edit-outline"></i>提问</el-button></router-link></el-col>
        </el-row>
           <el-row class="right-top-line">
             <el-col :span="24">我的回答 0</el-col>
@@ -219,7 +219,8 @@ export default {
     text-align: center;
     color: #2c3e50;
     font-size: 16px;
-    background-color: white;
+    overflow-y:auto;
+    overflow-x:hidden;
   }
   .bodys{
     padding:0 20%;

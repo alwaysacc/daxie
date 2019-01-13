@@ -114,18 +114,120 @@
               <div style="clear:both"></div>
 
             </div>
+            <div class="comment-input">
+              <el-row>
+                <el-col :span="input">
+                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                </el-col>
+                <el-col :span="butt">
+                  <el-button type="primary" v-if="button">提交</el-button>
+                </el-col>
+              </el-row>
+            </div>
+
+          </div>
+
+
+
+        </div>
+        <div class="tiezi">
+          <el-row>
+            <router-link to="/articleDetails">
+              <el-col> <h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col></router-link>
+          </el-row>
+          <div class="zuozhe" v-if="isZuozhe">
+            <el-row>
+              <el-col><img src="../image/img.jpg"/> 说。</el-col>
+            </el-row>
+            <el-row class="liulan">
+              <el-col>1111人浏览</el-col>
+            </el-row>
+          </div>
+          <el-row>
+            <el-col  :span="24">
+              <span :class="{'con-art':seeall}">
+                <div  v-html="content">
+                </div>
+              </span>
+            </el-col>
+
+            <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
+          </el-row>
+          <el-row>
+            <el-col :span="6"><a href="#">点赞</a></el-col>
+            <el-col :span="6" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
+            <el-col :span="6"><a href="#">分享</a> </el-col>
+            <el-col :span="6"><a href="#">收藏</a> </el-col>
+          </el-row>
+          <div v-if="show" class="comment-div">
+            <el-row class="comment">
+              <el-col :span="2"><a>评论</a></el-col>
+            </el-row>
+
+            <div class="comment-border">
+              <div class="comment-div-left">
+                <img src="@/image/img.jpg"/>
+              </div>
+              <div >
+                <div class="comment-div-right">
+                  <el-row class="a">
+                    <el-col>
+                      <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                  </el-row>
+                  <el-row class="a">
+                    <el-col>
+                      <a>牛逼牛逼牛逼牛逼</a>
+                    </el-col>
+                  </el-row>
+                  <el-row class="a sjdiv">
+                    <a>2019年1月12日18:08:50</a>
+                    <a class="dianzan">回复</a>
+                    <a class="dianzan">点赞</a>
+                  </el-row>
+                </div>
+
+              </div>
+              <div style="clear:both"></div>
 
             </div>
-              <div class="comment-input">
-                <el-row>
-                  <el-col :span="input">
-                    <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
-                  </el-col>
-                  <el-col :span="butt">
-                    <el-button type="primary" v-if="button">提交</el-button>
-                  </el-col>
-                </el-row>
+            <div class="comment-border">
+              <div class="comment-div-left">
+                <img src="@/image/img.jpg"/>
               </div>
+              <div >
+                <div class="comment-div-right">
+                  <el-row class="a">
+                    <el-col>
+                      <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                  </el-row>
+                  <el-row class="a">
+                    <el-col>
+                      <a>牛逼牛逼牛逼牛逼</a>
+                    </el-col>
+                  </el-row>
+                  <el-row class="a sjdiv">
+                    <a>2019年1月12日18:08:50</a>
+                    <a class="dianzan">回复</a>
+                    <a class="dianzan">点赞</a>
+                  </el-row>
+                </div>
+
+              </div>
+              <div style="clear:both"></div>
+
+            </div>
+            <div class="comment-input">
+              <el-row>
+                <el-col :span="input">
+                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                </el-col>
+                <el-col :span="butt">
+                  <el-button type="primary" v-if="button">提交</el-button>
+                </el-col>
+              </el-row>
+            </div>
+
+          </div>
 
 
 
@@ -135,7 +237,9 @@
       <div class="right">
         <div class="right-top">
           <el-row>
-            <el-col :span="8"><i class="el-icon-circle-plus-outline"/><br/><a>发帖 </a></el-col>
+            <el-col :span="8">
+              <router-link to="/addArticle"><i class="el-icon-circle-plus-outline"/><br/><a>发帖 </a></router-link>
+            </el-col>
             <el-col :span="8"><i class="el-icon-circle-plus-outline"/><br/><a>发帖</a> </el-col>
             <el-col :span="8"><i class="el-icon-circle-plus-outline"/><br/><a>发帖 </a></el-col>
           </el-row>
@@ -219,9 +323,6 @@ export default{
   #home{
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     text-align: center;
-    overflow-y:auto;
-    overflow-x:hidden;
-    height: 100%;
   }
   .center-div {
     display: flex;
@@ -252,7 +353,6 @@ export default{
     float: left;
     height: auto;
     margin-left: 10px;
-
     padding: 0 10px;
     overflow:hidden;
   }
@@ -295,13 +395,6 @@ export default{
   .items{
     background-color: #FA7A1F;
     margin-bottom: 5px;
-  }
-  .el_input1{
-    float: left;
-    transition-property:all;
-    transition-duration:0.5s;
-    transition-timing-function:ease-out;
-    width: 100%;
   }
   .seemore{
     float: right;
