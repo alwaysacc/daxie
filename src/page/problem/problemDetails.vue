@@ -1,6 +1,5 @@
 <template>
   <div id="problemDetails">
-    <y-header></y-header>
     <div class="center">
       <div class="left">
         <div class="left-top">
@@ -150,26 +149,22 @@
         </div>
       </div>
     </div>
-    <y-footer></y-footer>
   </div>
 </template>
 
 <script>
-import YHeader from '@/components/head'
-import YFooter from '@/components/footer'
-
 export default {
   name: 'problemDetails',
-  data(){
-    return{
-      answer:'<p>就举个例子好了：你要做一个属性编辑器，可以通过UI编辑一个对象的某些成员的值，而且你想支持很多类型的对象。如果没有反射，你要么只能hard code, 要么让这些对象人肉实现反射接口: virtual void SetParameter(String parameterName, String parameterValue); 这是一件多么烦人的事情。</p><p>再比如说自动序列化。给一个对象，把他保存成文件。没有反射你只能为每个对象手工写load和store函数。有了反射之后你可以一口气写一个Serialize&lt;T&gt;(T obj)然后遍历每个成员，看看有没有被标记为[序列化], 然后递归地去序列化该成员即可，多么方便。</p>一个有反射的语言通过同一份代码就可以解决所有上述问题。<span class="RichText ztext CopyrightRichText-richText" itemprop="text"><p>就举个例子好了：你要做一个属性编辑器，可以通过UI编辑一个对象的某些成员的值，而且你想支持很多类型的对象。如果没有反射，你要么只能hard code, 要么让这些对象人肉实现反射接口: virtual void SetParameter(String parameterName, String parameterValue); 这是一件多么烦人的事情。</p><p>再比如说自动序列化。给一个对象，把他保存成文件。没有反射你只能为每个对象手工写load和store函数。有了反射之后你可以一口气写一个Serialize&lt;T&gt;(T obj)然后遍历每个成员，看看有没有被标记为[序列化], 然后递归地去序列化该成员即可，多么方便。</p>一个有反射的语言通过同一份代码就可以解决所有上述问题。</span>',
-      show:true,
-      button:false,
+  data () {
+    return {
+      answer: '<p>就举个例子好了：你要做一个属性编辑器，可以通过UI编辑一个对象的某些成员的值，而且你想支持很多类型的对象。如果没有反射，你要么只能hard code, 要么让这些对象人肉实现反射接口: virtual void SetParameter(String parameterName, String parameterValue); 这是一件多么烦人的事情。</p><p>再比如说自动序列化。给一个对象，把他保存成文件。没有反射你只能为每个对象手工写load和store函数。有了反射之后你可以一口气写一个Serialize&lt;T&gt;(T obj)然后遍历每个成员，看看有没有被标记为[序列化], 然后递归地去序列化该成员即可，多么方便。</p>一个有反射的语言通过同一份代码就可以解决所有上述问题。<span class="RichText ztext CopyrightRichText-richText" itemprop="text"><p>就举个例子好了：你要做一个属性编辑器，可以通过UI编辑一个对象的某些成员的值，而且你想支持很多类型的对象。如果没有反射，你要么只能hard code, 要么让这些对象人肉实现反射接口: virtual void SetParameter(String parameterName, String parameterValue); 这是一件多么烦人的事情。</p><p>再比如说自动序列化。给一个对象，把他保存成文件。没有反射你只能为每个对象手工写load和store函数。有了反射之后你可以一口气写一个Serialize&lt;T&gt;(T obj)然后遍历每个成员，看看有没有被标记为[序列化], 然后递归地去序列化该成员即可，多么方便。</p>一个有反射的语言通过同一份代码就可以解决所有上述问题。</span>',
+      show: true,
+      button: false,
       input: 24,
-      butt: 0,
+      butt: 0
     }
   },
-  methods:{
+  methods: {
     pinglun () {
       this.show = !this.show
       this.pl = !pl
@@ -185,10 +180,6 @@ export default {
       this.butt = 0
     }
   },
-  components: {
-    YHeader,
-    YFooter
-  }
 }
 </script>
 
@@ -333,10 +324,9 @@ export default {
     padding-top: 30px;
   }
 
-
   .right{
-    float: right;
-    width: 24%;
+    float: left;
+    width: 20%;
     margin-top: 10px;
     height: auto;
     margin-left: 10px;

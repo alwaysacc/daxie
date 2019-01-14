@@ -1,6 +1,5 @@
 <template>
   <div id="addArticle">
-    <y-header></y-header>
     <div class="center">
       <el-row>
         <h3>发帖</h3>
@@ -30,7 +29,6 @@
         <el-button type="primary" @click="add">提交</el-button>
       </el-row>
     </div>
-    <y-footer></y-footer>
   </div>
 </template>
 
@@ -40,9 +38,9 @@ import YFooter from '@/components/footer'
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
 export default {
-  name: "addArticle",
-  data(){
-    return{
+  name: 'addArticle',
+  data () {
+    return {
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -60,27 +58,22 @@ export default {
         label: '北京烤鸭'
       }],
       value: '',
-      value2:''
+      value2: ''
     }
-
   },
-  methods:{
-    add(){
+  methods: {
+    add () {
       this.$message({
         message: '发布成功',
         type: 'success'
-      });
+      })
     }
   },
-  mounted(){
-    this.editor = new Editor("#editor");
+  mounted () {
+    this.editor = new Editor('#editor')
     this.editor.customConfig.uploadImgServer = '/upload'
 
     this.editor.create()
-  },
-  components: {
-    YHeader,
-    YFooter
   }
 }
 </script>

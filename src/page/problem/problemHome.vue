@@ -1,6 +1,5 @@
 <template>
   <div id="problemHome">
-    <y-header></y-header>
     <div class="bodys">
       <div class="lefts">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" class="left-top">
@@ -190,13 +189,10 @@
         </div>
       </div>
     </div>
-    <y-footer></y-footer>
   </div>
 </template>
 
 <script>
-import YHeader from '@/components/head'
-import YFooter from '@/components/footer'
 export default {
   name: 'problemHome',
   data () {
@@ -204,10 +200,6 @@ export default {
       activeName: 'first'
     }
   },
-  components: {
-    YHeader,
-    YFooter
-  }
 }
 </script>
 

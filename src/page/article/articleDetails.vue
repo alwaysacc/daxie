@@ -1,6 +1,5 @@
 <template>
   <div id="articleDetails">
-    <y-header></y-header>
     <div class="center">
       <div class="left">
         <el-row>
@@ -81,19 +80,16 @@
         </div>
       </div>
     </div>
-    <y-footer></y-footer>
   </div>
 </template>
 
 <script>
-import YHeader from '@/components/head'
-import YFooter from '@/components/footer'
 export default {
   name: 'articleDetails',
-  data(){
-    return{
-      wenzhang : '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br/></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
-      btn : false
+  data () {
+    return {
+      wenzhang: '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br/></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
+      btn: false
     }
   },
   methods: {
@@ -104,10 +100,6 @@ export default {
       this.btn = false
     }
   },
-  components: {
-    YHeader,
-    YFooter
-  }
 }
 </script>
 

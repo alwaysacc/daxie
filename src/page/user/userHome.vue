@@ -1,17 +1,16 @@
 <template>
-    <div id="userHome">
-      <y-header></y-header>
-      <div class="center">
-        <el-row class="center-top">
-            <div class="center-top-div">
-            <img src="@/image/img.jpg"><a>哈哈哈哈哈</a>
-            </div>
-          <div class="btn">
-          <el-button type="primary" plain >编辑个人资料</el-button>
-          </div>
-        </el-row>
-        <div class="center-bottom">
-          <div class="center-bottom-left">
+  <div id="userHome">
+    <div class="center">
+      <el-row class="center-top">
+        <div class="center-top-div">
+          <img src="@/image/img.jpg"><a>哈哈哈哈哈</a>
+        </div>
+        <div class="btn">
+          <router-link to="/userData"><el-button type="primary" plain>编辑个人资料</el-button></router-link>
+        </div>
+      </el-row>
+      <div class="center-bottom">
+        <div class="center-bottom-left">
           <el-tabs type="border-card">
             <el-tab-pane label="文章">
               <div class="wenzhang">
@@ -30,7 +29,8 @@
               <div class="tiezi">
                 <el-row>
                   <router-link to="/articleDetails">
-                    <el-col> <h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col></router-link>
+                    <el-col><h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col>
+                  </router-link>
                 </el-row>
                 <div class="zuozhe">
                   <el-row>
@@ -41,9 +41,9 @@
                   </el-row>
                 </div>
                 <el-row>
-                  <el-col  :span="24">
+                  <el-col :span="24">
               <span :class="{'con-art':seeall}">
-                <div  v-html="content">
+                <div v-html="content">
                 </div>
               </span>
                   </el-col>
@@ -65,7 +65,7 @@
                     <div class="comment-div-left">
                       <img src="@/image/img.jpg"/>
                     </div>
-                    <div >
+                    <div>
                       <div class="comment-div-right">
                         <el-row class="a">
                           <el-col>
@@ -91,7 +91,7 @@
                     <div class="comment-div-left">
                       <img src="@/image/img.jpg"/>
                     </div>
-                    <div >
+                    <div>
                       <div class="comment-div-right">
                         <el-row class="a">
                           <el-col>
@@ -116,7 +116,107 @@
                   <div class="comment-input">
                     <el-row>
                       <el-col :span="input">
-                        <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                        <el-input class="el_input1" placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                      </el-col>
+                      <el-col :span="butt">
+                        <el-button type="primary" v-if="button">提交</el-button>
+                      </el-col>
+                    </el-row>
+                  </div>
+
+                </div>
+              </div>
+              <div class="tiezi">
+                <el-row>
+                  <router-link to="/articleDetails">
+                    <el-col><h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col>
+                  </router-link>
+                </el-row>
+                <div class="zuozhe">
+                  <el-row>
+                    <el-col><img src="@/image/img.jpg"/> 说。</el-col>
+                  </el-row>
+                  <el-row class="liulan">
+                    <el-col>1111人浏览</el-col>
+                  </el-row>
+                </div>
+                <el-row>
+                  <el-col :span="24">
+              <span :class="{'con-art':seeall}">
+                <div v-html="content">
+                </div>
+              </span>
+                  </el-col>
+
+                  <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
+                </el-row>
+                <el-row class="content-pl">
+                  <a>点赞</a>
+                  <a @click="pinglun">评论</a>
+                  <a>分享</a>
+                  <a>收藏</a>
+                </el-row>
+                <div v-if="show" class="comment-div">
+                  <el-row class="comment">
+                    <el-col :span="2"><a>评论</a></el-col>
+                  </el-row>
+
+                  <div class="comment-border">
+                    <div class="comment-div-left">
+                      <img src="@/image/img.jpg"/>
+                    </div>
+                    <div>
+                      <div class="comment-div-right">
+                        <el-row class="a">
+                          <el-col>
+                            <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                        </el-row>
+                        <el-row class="a">
+                          <el-col>
+                            <a>牛逼牛逼牛逼牛逼</a>
+                          </el-col>
+                        </el-row>
+                        <el-row class="a sjdiv">
+                          <a>2019年1月12日18:08:50</a>
+                          <a class="dianzan">回复</a>
+                          <a class="dianzan">点赞</a>
+                        </el-row>
+                      </div>
+
+                    </div>
+                    <div style="clear:both"></div>
+
+                  </div>
+                  <div class="comment-border">
+                    <div class="comment-div-left">
+                      <img src="@/image/img.jpg"/>
+                    </div>
+                    <div>
+                      <div class="comment-div-right">
+                        <el-row class="a">
+                          <el-col>
+                            <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                        </el-row>
+                        <el-row class="a">
+                          <el-col>
+                            <a>牛逼牛逼牛逼牛逼</a>
+                          </el-col>
+                        </el-row>
+                        <el-row class="a sjdiv">
+                          <a>2019年1月12日18:08:50</a>
+                          <a class="dianzan">回复</a>
+                          <a class="dianzan">点赞</a>
+                        </el-row>
+                      </div>
+
+                    </div>
+                    <div style="clear:both"></div>
+
+                  </div>
+                  <div class="comment-input">
+                    <el-row>
+                      <el-col :span="input">
+                        <el-input class="el_input1" placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
                       </el-col>
                       <el-col :span="butt">
                         <el-button type="primary" v-if="button">提交</el-button>
@@ -127,52 +227,227 @@
                 </div>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="提问">提问</el-tab-pane>
-            <el-tab-pane label="回答">回答</el-tab-pane>
-            <el-tab-pane label="评论">评论</el-tab-pane>
-            <el-tab-pane label="关注">关注</el-tab-pane>
-            <el-tab-pane label="关注">收藏</el-tab-pane>
-          </el-tabs>
-          </div>
-          <div class="center-bottom-right">
-            <el-row >
-              <el-col :span="12" class="center-bottom-right-row">
-                关注 2
-              </el-col>
-              <el-col :span="12" class="center-bottom-right-row">
-                粉丝 2
-              </el-col>
-            </el-row>
-          </div>
-        </div>
+            <el-tab-pane label="提问">
+              <div class="wenzhang">
+                他的文章 <a>
+                <el-dropdown>
+  <span class="el-dropdown-link">
+    排序方式<i class="el-icon-sort"></i>
+  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>按时间</el-dropdown-item>
+                    <el-dropdown-item>按点赞</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </a>
+              </div>
+              <div>
+                <div class="wenti">
+                  <el-row>
+                      <router-link to="/problemDetails"><h3>为什么语言里要提供“反射”功能？</h3></router-link>
+                  </el-row>
+                    <el-row class="divbot">
+                    <a>2018-08-28 11:16 </a>
+                    <a>167 次浏览</a>
+                    <a>7 个回答</a>
+                  </el-row>
+                </div>
+                <div class="wenti">
+                  <el-row>
+                    <router-link to="/problemDetails"><h3>为什么语言里要提供“反射”功能？</h3></router-link>
+                  </el-row>
+                  <el-row class="divbot">
+                    <a>2018-08-28 11:16 </a>
+                    <a>167 次浏览</a>
+                    <a>7 个回答</a>
+                  </el-row>
+                </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="回答">  <div class="wenzhang">
+              他的文章 <a>
+              <el-dropdown>
+  <span class="el-dropdown-link">
+    排序方式<i class="el-icon-sort"></i>
+  </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>按时间</el-dropdown-item>
+                  <el-dropdown-item>按点赞</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </a>
+            </div>
+            <div>
+              <div class="answer">
+                <el-row >
+                    <h3>为什么语言里要提供“反射”功能？</h3>
+                </el-row>
+                <el-row class="font">
+                    <p >为什么需要反射，这不是破坏了封装吗?</p>
+                </el-row>
+                <el-row class="divbot">
+                  <el-row class="content-pl">
+                    <a>点赞</a>
+                    <a @click="pinglun">评论</a>
+                    <a>分享</a>
+                    <a>收藏</a>
+                  </el-row>
+                  <div v-if="show" class="comment-div">
+                    <el-row class="comment">
+                      <el-col :span="3"><a>评论</a></el-col>
+                    </el-row>
 
+                    <div class="comment-border">
+                      <div class="comment-div-left">
+                        <img src="@/image/img.jpg"/>
+                      </div>
+                      <div>
+                        <div class="comment-div-right">
+                          <el-row class="a">
+                            <el-col>
+                              <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                          </el-row>
+                          <el-row class="a">
+                            <el-col>
+                              <a>牛逼牛逼牛逼牛逼</a>
+                            </el-col>
+                          </el-row>
+                          <el-row class="a sjdiv">
+                            <a>2019年1月12日18:08:50</a>
+                            <a class="dianzan">回复</a>
+                            <a class="dianzan">点赞</a>
+                          </el-row>
+                        </div>
+
+                      </div>
+                      <div style="clear:both"></div>
+
+                    </div>
+                    <div class="comment-border">
+                      <div class="comment-div-left">
+                        <img src="@/image/img.jpg"/>
+                      </div>
+                      <div>
+                        <div class="comment-div-right">
+                          <el-row class="a">
+                            <el-col>
+                              <a style="font-weight: bold">哈哈哈哈</a></el-col>
+                          </el-row>
+                          <el-row class="a">
+                            <el-col>
+                              <a>牛逼牛逼牛逼牛逼</a>
+                            </el-col>
+                          </el-row>
+                          <el-row class="a sjdiv">
+                            <a>2019年1月12日18:08:50</a>
+                            <a class="dianzan">回复</a>
+                            <a class="dianzan">点赞</a>
+                          </el-row>
+                        </div>
+
+                      </div>
+                      <div style="clear:both"></div>
+
+                    </div>
+                    <div class="comment-input">
+                      <el-row>
+                        <el-col :span="input">
+                          <el-input class="el_input1" placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                        </el-col>
+                        <el-col :span="butt">
+                          <el-button type="primary" v-if="button">提交</el-button>
+                        </el-col>
+                      </el-row>
+                    </div>
+
+                  </div>
+                </el-row>
+              </div>
+            </div>
+            </el-tab-pane>
+            <el-tab-pane label="评论">评论</el-tab-pane>
+            <el-tab-pane label="关注">
+              <div class="wenzhang">
+                他的文章 <a>
+                <el-dropdown>
+  <span class="el-dropdown-link">
+    排序方式<i class="el-icon-sort"></i>
+  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>按时间</el-dropdown-item>
+                    <el-dropdown-item>按点赞</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </a>
+              </div>
+              <div>
+                <div>
+                  <el-row>
+                    <img src="@/image/img.jpg"/> hhhhh <el-button type="danger" class="btns">取消关注</el-button>
+                  </el-row>
+                </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="粉丝">
+              <div class="wenzhang">
+                他的文章 <a>
+                <el-dropdown>
+  <span class="el-dropdown-link">
+    排序方式<i class="el-icon-sort"></i>
+  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>按时间</el-dropdown-item>
+                    <el-dropdown-item>按点赞</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </a>
+              </div>
+              <div>
+                <div>
+                  <el-row>
+                    <img src="@/image/img.jpg"/> hhhhh <el-button type="danger" class="btns">关注他</el-button>
+                  </el-row>
+                </div>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+        <div class="center-bottom-right">
+          <el-row>
+            <el-col :span="12" class="center-bottom-right-row">
+              关注 2
+            </el-col>
+            <el-col :span="12" class="center-bottom-right-row">
+              粉丝 2
+            </el-col>
+          </el-row>
+        </div>
       </div>
-      <y-footer></y-footer>
+
     </div>
+  </div>
 </template>
 
 <script>
-import YHeader from '@/components/head'
-import YFooter from '@/components/footer'
 export default {
-    name: "userHome",
-  data(){
-      return{
-        input: 24,
-        butt: 0,
-        isButton: '0',
-        isZuozhe: false,
-        content : '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
-        seeall: true,
-        show: false,
-        pl: true,
-        button: false
-      }
+  name: 'userHome',
+  data () {
+    return {
+      input: 24,
+      butt: 0,
+      isButton: '0',
+      isZuozhe: false,
+      content: '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
+      seeall: true,
+      show: false,
+      pl: true,
+      button: false
+    }
   },
-  methods:{
+  methods: {
     seeAll () {
       this.seeall = !this.seeall
-      this.isZuozhe=!this.isZuozhe
+      this.isZuozhe = !this.isZuozhe
     },
     pinglun () {
       this.show = !this.show
@@ -191,16 +466,12 @@ export default {
       this.input = 24
       this.butt = 0
     }
-  },
-  components: {
-    YHeader,
-    YFooter
   }
 }
 </script>
 
 <style scoped>
-  #userHome{
+  #userHome {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -208,116 +479,139 @@ export default {
     color: black;
     font-size: 16px;
   }
-  .center{
+
+  .center {
     text-align: left;
-    margin:  0 20%;
+    margin: 0 20%;
     background-color: white;
     margin-top: 20px;
   }
-  .center-top-div{
+
+  .center-top-div {
     float: left;
     height: 50px;
     line-height: 50px;
   }
-  .center-top-div img{
+
+  .center-top-div img {
     border: darkgrey solid 2px;
     width: 50px;
     height: 50px;
   }
-   .btn{
+
+  .btn {
     padding-top: 20px;
-     padding-right: 30px;
-     height: 50px;
+    padding-right: 30px;
+    height: 50px;
     float: right;
   }
-  .center-bottom{
+
+  .center-bottom {
     margin-top: 20px;
     width: 100%;
   }
-  .center-bottom-left{
+
+  .center-bottom-left {
     float: left;
     width: 80%;
   }
-  .center-bottom-right{
+
+  .center-bottom-right {
     float: right;
     width: 20%;
     background: white;
 
   }
-  .center-bottom-right-row{
+
+  .center-bottom-right-row {
     height: 60px;
     line-height: 60px;
     padding-left: 30px;
   }
-  .tiezi{
-    border: bisque solid 1px;
+
+  .tiezi {
     padding: 10px;
     background-color: white;
     margin-bottom: 20px;
   }
-  .tiezi   h3{
+
+  .tiezi h3 {
     float: left;
     overflow: hidden;
   }
-  .zuozhe{
+
+  .zuozhe {
     float: left;
     overflow: hidden;
     padding-bottom: 10px;
   }
-  .liulan{
+
+  .liulan {
     font-size: 14px;
     color: darkgrey;
     padding-left: 5px;
   }
-  ::-webkit-scrollbar{
-    width:0;
+
+  ::-webkit-scrollbar {
+    width: 0;
   }
-  .content-pl a{
+
+  .content-pl a {
     padding-right: 20px;
   }
-  .comment-div{
+
+  .comment-div {
     height: auto;
     overflow: hidden;
     padding-top: 50px;
   }
-  .comment{
+
+  .comment {
     padding-bottom: 20px;
   }
-  .comment a{
+
+  .comment a {
     font-weight: bold;
   }
-  .comment-div-left{
+
+  .comment-div-left {
     float: left;
     height: 50px;
     width: 5%;
     line-height: 50px;
   }
-  .comment-div-right{
+
+  .comment-div-right {
     float: left;
     width: 95%
   }
 
-  .comment-div-right .a{
+  .comment-div-right .a {
     float: left;
     text-align: left;
     margin-top: 10px;
     width: 100%;
   }
-  .dianzan{
+
+  .dianzan {
     float: right;
     margin-right: 20px;
   }
-  .sjdiv a{
+
+  .sjdiv a {
     font-size: 13px;
     color: darkgrey;
   }
-  .comment-border{
+
+  .comment-border {
     padding-bottom: 5px;
     border-bottom: darkgrey solid 1px;
   }
-  .comment-input{
+
+  .comment-input {
     padding-top: 30px;
   }
+
   .con-art {
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -325,11 +619,34 @@ export default {
     -webkit-line-clamp: 1;
     overflow: hidden;
   }
-  .wenzhang{
+
+  .wenzhang {
     height: 40px;
     line-height: 40px;
   }
-  .wenzhang a{
+
+  .wenzhang a {
     float: right;
+  }
+  .wenti{
+    height: 80px;
+    background-color: white;
+    padding-bottom: 10px;
+    border-bottom: darkgrey solid 1px;
+  }
+  .wenti h3{
+    float: left;
+  }
+  .wenti .font p{
+    font-size: 12px;
+    padding-left: 20px;
+    float: left;
+  }
+  .divbot a{
+    padding-right: 50px;
+  }
+  .center-bottom  .btns{
+    float: right;
+    padding-right: 20px;
   }
 </style>
