@@ -84,9 +84,9 @@
                       </div>
 
                     </div>
-                    <div style="clear:both"></div>
+                  <div style="clear:both"></div>
 
-                  </div>
+                </div>
                   <div class="comment-border">
                     <div class="comment-div-left">
                       <img src="@/image/img.jpg"/>
