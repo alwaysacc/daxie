@@ -286,7 +286,7 @@ export default{
     },
     pinglun () {
       this.show = !this.show
-      this.pl = !pl
+      this.pl = !this.pl
     },
     blur_input () {
       this.isButton = '0'

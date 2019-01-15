@@ -1,6 +1,5 @@
 <template>
 <div id="login">
-<y-header></y-header>
 <div class="center-div">
   <el-tabs v-model="activeName" @tab-click="handleClick" type="card" stretch="true">
     <el-tab-pane label="账号登录" name="first">
@@ -27,37 +26,35 @@
   </el-tabs>
 
 </div>
-  <y-footer></y-footer>
 </div>
 </template>
 
 <script>
-import YHeader from '../components/head'
-import YFooter from '../components/footer'
+
 export default {
   name: 'login',
-  data() {
+  data () {
     var checkAge = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('验证码不能为空'));
-      }else {
-        callback();
+        return callback(new Error('验证码不能为空'))
+      } else {
+        callback()
       }
-    };
+    }
     var validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入用户名'));
+        callback(new Error('请输入用户名'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('请输入密码'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       activeName: 'first',
       radio: '1',
@@ -77,25 +74,21 @@ export default {
           { validator: checkAge, trigger: 'blur' }
         ]
       }
-    };
-  },
-  components: {
-    YHeader,
-    YFooter
+    }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          alert('submit!')
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }

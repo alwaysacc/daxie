@@ -41,9 +41,9 @@
 <script>
 export default {
   name: 'head',
-  data(){
-    return{
-      islogin:false
+  data () {
+    return {
+      islogin: true
     }
   }
 }

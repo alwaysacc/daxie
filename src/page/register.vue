@@ -1,21 +1,20 @@
 <template>
   <div id="register">
-  <y-header></y-header>
   <div class="center-div">
-    <el-tabs v-model="activeName" @tab-click="handleClick"  type="card" stretch="true">
+    <el-tabs  v-model="activeName" @tab-click="handleClick"  type="card" stretch="true">
       <el-tab-pane label="注册账号" name="first">
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="用户名" prop="name">
-            <el-input type="text" v-model="ruleForm2.name" autocomplete="off"></el-input>
+        <el-form  status-icon :rules="rules2" :model="ruleForm"  ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="用户名" prop="userName">
+            <el-input type="text" v-model="ruleForm.userName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input type="password" v-model="ruleForm2.email" autocomplete="off"></el-input>
+            <el-input type="password" v-model="ruleForm.email" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input v-model.number="ruleForm2.password" type="password"></el-input>
+          <el-form-item label="密码" prop="passWord">
+            <el-input v-model="ruleForm.passWord" type="password"></el-input>
           </el-form-item>
           <el-form-item label="验证码" prop="code">
-            <el-input v-model.number="ruleForm2.code"></el-input>
+            <el-input v-model="ruleForm.code"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
@@ -24,19 +23,17 @@
       <el-tab-pane label="快速登录" name="second">二维码</el-tab-pane>
     </el-tabs>
   </div>
-    <y-footer></y-footer>
   </div>
 </template>
 
 <script>
-import YHeader from '../components/head'
-import YFooter from '../components/footer'
+import axios from 'axios'
 export default {
   name: 'register',
   data () {
     var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('验证码不能为空'))
+      if (value === '') {
+        callback(new Error('验证码不能为空'))
       } else {
         callback()
       }
@@ -57,7 +54,7 @@ export default {
     }
     var checkCode = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'))
+        callback(new Error('1'))
       } else {
         callback()
       }
@@ -65,20 +62,26 @@ export default {
     return {
       activeName: 'first',
       radio: '0',
-      ruleForm2: {
-        name: '',
+      ruleForm: {
+        userName: '',
         email: '',
-        password: '',
+        passWord: '',
+        code: ''
+      },
+      forumUser: {
+        userName: '',
+        email: '',
+        passWord: '',
         code: ''
       },
       rules2: {
-        name: [
+        userName: [
           { validator: validatePass, trigger: 'blur' }
         ],
         email: [
           { validator: validatePass2, trigger: 'blur' }
         ],
-        password: [
+        passWord: [
           { validator: checkAge, trigger: 'blur' }
         ],
         code: [
@@ -87,23 +90,27 @@ export default {
       }
     }
   },
-  components: {
-    YHeader,
-    YFooter
-  },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert('submit!')
+          console.log(JSON.stringify(this.forumUser))
+          var url = '/user'
+          var msg = {ForumUser: JSON.stringify(this.forumUser)}
+          this.$http
+            .post(url, msg)
+            .then(res => {
+              console.log(res.data)
+            })
+            .catch(error => {
+              console.log(error.message)
+            })
         } else {
           console.log('error submit!!')
           return false
         }
       })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
     },
     handleClick () {
       console.log(this.activeName)
