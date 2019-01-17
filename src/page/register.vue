@@ -1,7 +1,7 @@
 <template>
   <div id="register">
   <div class="center-div">
-    <el-tabs  v-model="activeName" @tab-click="handleClick"  type="card" stretch="true">
+    <el-tabs  v-model="activeName" @tab-click="handleClick"  type="card" stretch>
       <el-tab-pane label="注册账号" name="first">
         <el-form  status-icon :rules="rules2" :model="ruleForm"  ref="ruleForm2" label-width="100px" class="demo-ruleForm">
           <el-form-item label="用户名" prop="userName">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { getUser } from '../util/api'
 export default {
   name: 'register',
   data () {
@@ -96,19 +96,21 @@ export default {
         if (valid) {
           alert('submit!')
           console.log(JSON.stringify(this.forumUser))
-          var url = '/user'
-          var msg = {ForumUser: JSON.stringify(this.forumUser)}
-          this.$http
-            .post(url, msg)
-            .then(res => {
-              console.log(res.data)
-            })
-            .catch(error => {
-              console.log(error.message)
-            })
-        } else {
-          console.log('error submit!!')
-          return false
+
+          //var params = new URLSearchParams();
+          //params.append('id', '1');
+          let params ={
+            params :{
+            id:1
+          }
+          }
+          getUser(params).then(res => {
+            console.log(res)
+            if (res.success === true) {
+            console.log(res)
+            } else {
+            }
+          })
         }
       })
     },
