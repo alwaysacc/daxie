@@ -1,7 +1,7 @@
 <template>
 <div id="login">
 <div class="center-div">
-  <el-tabs v-model="activeName" @tab-click="handleClick" type="card" stretch="true">
+  <el-tabs v-model="activeName" type="card" stretch="true">
     <el-tab-pane label="账号登录" name="first">
       <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
       <el-form-item label="用户名" prop="pass">
