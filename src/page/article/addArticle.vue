@@ -4,10 +4,10 @@
       <el-row>
         <h3>发帖</h3>
       </el-row>
-      <el-input v-model="input" placeholder="请输入标题"></el-input>
+      <el-input v-model="article.title" placeholder="请输入标题"></el-input>
       <div id="editor"></div>
       <el-row class="line">
-        选择分类：<el-select v-model="value" placeholder="请选择">
+        选择分类：<el-select v-model="article.sortid" placeholder="请选择">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -19,60 +19,84 @@
       <el-row  class="line">
         <el-col>
           是否匿名：<el-switch
-          v-model="value2"
+          v-model="article.incognito"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
         </el-col>
       </el-row>
       <el-row  class="btn">
-        <el-button type="primary" @click="add">提交</el-button>
+        <el-button type="primary" @click="addArticle">提交</el-button>
       </el-row>
     </div>
   </div>
 </template>
 
 <script>
-import YHeader from '@/components/head'
-import YFooter from '@/components/footer'
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
+import  {addArticle} from "../../util/http";
 export default {
   name: 'addArticle',
   data () {
     return {
+      article:{
+        title:'',
+        content:'',
+        incognito:'',
+        sortid:'',
+        userid:''
+      },
       options: [{
-        value: '选项1',
+        value: '1',
         label: '黄金糕'
       }, {
-        value: '选项2',
+        value: '2',
         label: '双皮奶'
       }, {
-        value: '选项3',
+        value: '3',
         label: '蚵仔煎'
       }, {
-        value: '选项4',
+        value: '4',
         label: '龙须面'
       }, {
-        value: '选项5',
+        value: '5',
         label: '北京烤鸭'
       }],
       value: '',
-      value2: ''
+      value2: '',
     }
   },
   methods: {
-    add () {
-      this.$message({
-        message: '发布成功',
-        type: 'success'
+    addArticle () {
+      if (this.article.incognito==true) {
+        this.article.incognito=1
+      }else{
+        this.article.incognito=0
+      }
+      this.article.userid=this.$store.state.user.userid
+      let params=this.article
+      addArticle(params).then(res=>{
+        if (res.code===200){
+          this.$message({
+            message: '发布成功',
+            type: 'success'
+          })
+        }else{
+          this.$message({
+            message: res.message,
+            type: 'info'
+          })
+        }
       })
     }
   },
   mounted () {
     this.editor = new Editor('#editor')
-    this.editor.customConfig.uploadImgServer = '/upload'
-
+    //this.editor.customConfig.uploadImgServer = '/upload'
+    this.editor.customConfig.onchange = (html) => {
+      this.article.content = html
+    }
     this.editor.create()
   }
 }

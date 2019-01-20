@@ -1,38 +1,24 @@
 <template>
   <div id="home">
     <div class="centers">
-
       <div class="left">
-
-        <el-menu  class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-          <el-menu-item index="1" class="items">
-            <template slot="title">
-              <span>Java</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="2" class="items">
-            <span slot="title" >PHP</span>
-          </el-menu-item>
-          <el-menu-item index="3" class="items">
-            <span slot="title">MySQL</span>
-          </el-menu-item>
-          <el-menu-item index="4" class="items">
-            <span slot="title">前端</span>
-          </el-menu-item>
-          <el-menu-item index="5" >
-            <span slot="title">前端</span>
+        <el-menu  class="el-menu-vertical-demo" background-color="#FA7A1F"
+                  text-color="#000"
+                  active-text-color="#FF0000" v-for="(sort,index) in sortlist" :key="sort.id">
+          <el-menu-item  index="key" class="items"  >
+              <span >{{sort.sortname}}</span>
           </el-menu-item>
         </el-menu>
 
       </div>
 
       <div class="center-div">
-        <div class="tiezi">
+        <div class="tiezi"  v-for="(article,index) in articlelist">
           <el-row>
             <router-link to="/articleDetails">
-            <el-col> <h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col></router-link>
+            <el-col> <h3>{{article.title}}</h3></el-col></router-link>
           </el-row>
-          <div class="zuozhe" v-if="isZuozhe">
+          <div class="zuozhe" v-if="!article.seeall">
             <el-row>
               <el-col><img src="../image/img.jpg"/> 说。</el-col>
             </el-row>
@@ -42,21 +28,21 @@
           </div>
           <el-row>
             <el-col  :span="24">
-              <span :class="{'con-art':seeall}">
-                <div  v-html="content">
+              <span :class="{'con-art':article.seeall}">
+                <div  v-html="article.content" style="text-align: left">
                 </div>
               </span>
             </el-col>
 
-            <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
+            <div @click='seeAll(index)' style="float: right"><a style="color:#FA7A1F;  " >{{article.seeall? '查看全文':'收起'}}</a></div>
           </el-row>
           <el-row>
             <el-col :span="6"><a href="#">点赞</a></el-col>
-            <el-col :span="6" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
+            <el-col :span="6" ><a @click="pinglun(index,article.articleid)" style=" cursor:pointer"> {{article.comments? '收起评论':'55评论'}}</a> </el-col>
             <el-col :span="6"><a href="#">分享</a> </el-col>
             <el-col :span="6"><a href="#">收藏</a> </el-col>
           </el-row>
-          <div v-if="show" class="comment-div">
+          <div v-if="article.comments" class="comment-div">
             <el-row class="comment">
             <el-col :span="2"><a>评论</a></el-col>
           </el-row>
@@ -115,111 +101,11 @@
             </div>
             <div class="comment-input">
               <el-row>
-                <el-col :span="input">
-                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                <el-col :span="input" >
+                  <el-input  class="el_input1" v-model="comments.comment"  @focus="fsbutton" placeholder="请输入内容"></el-input>
                 </el-col>
-                <el-col :span="butt">
-                  <el-button type="primary" v-if="button">提交</el-button>
-                </el-col>
-              </el-row>
-            </div>
-
-          </div>
-
-        </div>
-        <div class="tiezi">
-          <el-row>
-            <router-link to="/articleDetails">
-              <el-col> <h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col></router-link>
-          </el-row>
-          <div class="zuozhe" v-if="isZuozhe">
-            <el-row>
-              <el-col><img src="../image/img.jpg"/> 说。</el-col>
-            </el-row>
-            <el-row class="liulan">
-              <el-col>1111人浏览</el-col>
-            </el-row>
-          </div>
-          <el-row>
-            <el-col  :span="24">
-              <span :class="{'con-art':seeall}">
-                <div  v-html="content">
-                </div>
-              </span>
-            </el-col>
-
-            <div @click='seeAll' style="float: right"><a style="color:#FA7A1F ">{{seeall?'查看全文':'收起'}}</a></div>
-          </el-row>
-          <el-row>
-            <el-col :span="6"><a href="#">点赞</a></el-col>
-            <el-col :span="6" ><a v-if="pl" @click="pinglun">55评论</a> <a v-if="!pl" @click="pinglun">收起评论</a></el-col>
-            <el-col :span="6"><a href="#">分享</a> </el-col>
-            <el-col :span="6"><a href="#">收藏</a> </el-col>
-          </el-row>
-          <div v-if="show" class="comment-div">
-            <el-row class="comment">
-              <el-col :span="2"><a>评论</a></el-col>
-            </el-row>
-
-            <div class="comment-border">
-              <div class="comment-div-left">
-                <img src="@/image/img.jpg"/>
-              </div>
-              <div >
-                <div class="comment-div-right">
-                  <el-row class="a">
-                    <el-col>
-                      <a style="font-weight: bold">哈哈哈哈</a></el-col>
-                  </el-row>
-                  <el-row class="a">
-                    <el-col>
-                      <a>牛逼牛逼牛逼牛逼</a>
-                    </el-col>
-                  </el-row>
-                  <el-row class="a sjdiv">
-                    <a>2019年1月12日18:08:50</a>
-                    <a class="dianzan">回复</a>
-                    <a class="dianzan">点赞</a>
-                  </el-row>
-                </div>
-
-              </div>
-              <div style="clear:both"></div>
-
-            </div>
-            <div class="comment-border">
-              <div class="comment-div-left">
-                <img src="@/image/img.jpg"/>
-              </div>
-              <div >
-                <div class="comment-div-right">
-                  <el-row class="a">
-                    <el-col>
-                      <a style="font-weight: bold">哈哈哈哈</a></el-col>
-                  </el-row>
-                  <el-row class="a">
-                    <el-col>
-                      <a>牛逼牛逼牛逼牛逼</a>
-                    </el-col>
-                  </el-row>
-                  <el-row class="a sjdiv">
-                    <a>2019年1月12日18:08:50</a>
-                    <a class="dianzan">回复</a>
-                    <a class="dianzan">点赞</a>
-                  </el-row>
-                </div>
-
-              </div>
-              <div style="clear:both"></div>
-
-            </div>
-            <div class="comment-input">
-              <el-row>
-                <el-col :span="input">
-                  <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
-                </el-col>
-                <el-col :span="butt">
-                  <el-button type="primary" v-if="button">提交</el-button>
+                <el-col  :span="butt">
+                  <el-button type="primary" v-if="button" @click="addComment(article.articleid)">提交</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -262,6 +148,9 @@
 
 <script>
 /* eslint-disable no-undef */
+import {getHomeList} from "../util/http";
+import {getSortList} from "../util/http";
+import {addComment,getCommentList} from "../util/http";
 
 export default{
   name: 'home',
@@ -270,23 +159,36 @@ export default{
       input: 24,
       butt: 0,
       isButton: '0',
-      isZuozhe: false,
-      content: '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
-      seeall: true,
-      show: false,
-      pl: true,
-      button: false
+      button: false,
+      articlelist:{},
+      sortlist:{},
+      comments:{
+        forid:'',
+        userid:'',
+        comment:''
+      },
+      commentlist:{}
     }
   },
 
   methods: {
-    seeAll () {
-      this.seeall = !this.seeall
-      this.isZuozhe = !this.isZuozhe
+    seeAll (index) {
+      this.$set(this.articlelist[index], 'seeall', ! this.articlelist[index].seeall);
     },
-    pinglun () {
-      this.show = !this.show
-      this.pl = !this.pl
+    pinglun (index,articleid) {
+      console.log(articleid)
+      let params={
+        forid:articleid
+      }
+      getCommentList(params).then(res=>{
+        console.log(res)
+        if (res.code=200){
+          this.$set(this.articlelist[index], 'comments', ! this.articlelist[index].comments);
+          this.commentlist=res.data.list
+        }else{
+
+        }
+      })
     },
     blur_input () {
       this.isButton = '0'
@@ -300,7 +202,62 @@ export default{
       this.button = false
       this.input = 24
       this.butt = 0
+    },
+    //获取文章列表
+    getHomeList(){
+      let params={page:0,size:10}
+      getHomeList(params).then(res=>{
+        console.log(res)
+        if (res.code===200){
+          this.articlelist=res.data.list
+          let len = this.articlelist.length;
+          for(let i = 0; i < len; i++) {
+            this.$set(this.articlelist[i], 'seeall', true);
+            this.$set(this.articlelist[i], 'comments', false);
+          }
+        }else{
+
+        }
+      })
+    },
+    //获取分类列表
+    getSortList(){
+      let param={page:0,size:10}
+      getSortList(param).then(res=>{
+        if (res.code===200){
+          this.sortlist=res.data.list
+        }
+      })
+    },
+    addComment(articleid){
+      this.comments.forid=articleid
+      this.comments.userid=this.$store.state.user.userid
+      let params=this.comments
+
+      addComment(params).then(res=>{
+        console.log(res)
+        if (res.code===200){
+            this.$message({
+              type: 'success',
+              message: `评论成功`
+            });
+        }else{
+          this.$message({
+            type: 'info',
+            message: `评论失败`
+          });
+        }
+      })
+      console.log(this.comment)
     }
+  },
+  created(){
+    this.getHomeList()
+    this.getSortList()
+
+  },
+  mounted(){
+
   }
 }
 </script>
@@ -308,44 +265,43 @@ export default{
 <style scoped>
   #home{
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    padding-bottom:150px;
+    width: 100%;
+    color: black;
+    font-size: 16px;
   }
-  .center-div {
-    display: flex;
-    flex-wrap: wrap;
-    width: 98%;
+  a{
+    cursor:pointer
   }
-  .con-art {
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
+
   .centers{
-    padding-left: 20%;
-    padding-right: 20%;
-    margin-top: 10px;
-    overflow:hidden;
+    padding:0 20%;
+    margin-top: 20px;
+    height: 100%;
+    width: 100%;
   }
   .left{
-    width: 13%;
-    float: left;
+    left: 20%;
+    width: 8%;
     background-color: white;
     padding: 0 5px;
+    height: auto;
+    position:fixed;
   }
   .center-div{
-    width:62%;
+    width:38%;
     float: left;
-    height: auto;
+    padding-left: 8%;
     margin-left: 10px;
-    padding: 0 10px;
-    overflow:hidden;
   }
   .right{
-    float: left;
     margin-left: 10px;
-    width: 20%;
+    width: 12%;
+    position:fixed;
+    right: 20%;
   }
   .right-top{
     height: 60px;
@@ -378,9 +334,8 @@ export default{
     border-bottom: #E7E7E7 solid 1px;
   }
 
-  .items{
-    background-color: #FA7A1F;
-    margin-bottom: 5px;
+  .el-menu-vertical-demo .items{
+    border-bottom: 5px beige inset;
   }
   .seemore{
     float: right;
@@ -391,6 +346,7 @@ export default{
     padding: 10px;
     background-color: white;
     margin-bottom: 20px;
+    width: 100%;
   }
   .tiezi   h3{
     float: left;
@@ -405,9 +361,6 @@ export default{
     font-size: 14px;
     color: darkgrey;
     padding-left: 5px;
-  }
-  ::-webkit-scrollbar{
-    width:0;
   }
   .comment-div{
     height: auto;
@@ -451,5 +404,12 @@ export default{
   }
   .comment-input{
     padding-top: 30px;
+  }
+  .con-art {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 </style>

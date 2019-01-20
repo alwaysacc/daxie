@@ -47,6 +47,102 @@
             </el-row>
           </div>
         </div>
+        <div class="comment-div">
+          <el-row class="comment">
+            <el-col :span="2"><a>评论</a></el-col>
+          </el-row>
+          <div class="comment-div-left">
+            <img src="@/image/img.jpg"/>
+          </div>
+          <div class="comment-div-right">
+            <el-row class="a">
+              <el-col>
+                <a style="font-weight: bold">哈哈哈哈</a></el-col>
+            </el-row>
+            <el-row class="a">
+              <el-col>
+                <a>牛逼牛逼牛逼牛逼</a>
+              </el-col>
+            </el-row>
+            <el-row class="a sjdiv">
+              <a>2019年1月12日18:08:50</a>
+              <a class="dianzan">回复</a>
+              <a class="dianzan">点赞</a>
+            </el-row>
+          </div>
+        </div>
+        <div class="comment-div">
+          <el-row class="comment">
+            <el-col :span="2"><a>评论</a></el-col>
+          </el-row>
+          <div class="comment-div-left">
+            <img src="@/image/img.jpg"/>
+          </div>
+          <div class="comment-div-right">
+            <el-row class="a">
+              <el-col>
+                <a style="font-weight: bold">哈哈哈哈</a></el-col>
+            </el-row>
+            <el-row class="a">
+              <el-col>
+                <a>牛逼牛逼牛逼牛逼</a>
+              </el-col>
+            </el-row>
+            <el-row class="a sjdiv">
+              <a>2019年1月12日18:08:50</a>
+              <a class="dianzan">回复</a>
+              <a class="dianzan">点赞</a>
+            </el-row>
+          </div>
+        </div>
+        <div class="comment-div">
+          <el-row class="comment">
+            <el-col :span="2"><a>评论</a></el-col>
+          </el-row>
+          <div class="comment-div-left">
+            <img src="@/image/img.jpg"/>
+          </div>
+          <div class="comment-div-right">
+            <el-row class="a">
+              <el-col>
+                <a style="font-weight: bold">哈哈哈哈</a></el-col>
+            </el-row>
+            <el-row class="a">
+              <el-col>
+                <a>牛逼牛逼牛逼牛逼</a>
+              </el-col>
+            </el-row>
+            <el-row class="a sjdiv">
+              <a>2019年1月12日18:08:50</a>
+              <a class="dianzan">回复</a>
+              <a class="dianzan">点赞</a>
+            </el-row>
+          </div>
+        </div>
+        <div class="comment-div">
+          <el-row class="comment">
+            <el-col :span="2"><a>评论</a></el-col>
+          </el-row>
+          <div class="comment-div-left">
+            <img src="@/image/img.jpg"/>
+          </div>
+          <div class="comment-div-right">
+            <el-row class="a">
+              <el-col>
+                <a style="font-weight: bold">哈哈哈哈</a></el-col>
+            </el-row>
+            <el-row class="a">
+              <el-col>
+                <a>牛逼牛逼牛逼牛逼</a>
+              </el-col>
+            </el-row>
+            <el-row class="a sjdiv">
+              <a>2019年1月12日18:08:50</a>
+              <a class="dianzan">回复</a>
+              <a class="dianzan">点赞</a>
+            </el-row>
+          </div>
+        </div>
       </div>
       <div class="right">
         <div class="right-top">
@@ -109,7 +205,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: black;
     font-size: 16px;
     width: 100%;
     background-color: #F6F6F6;

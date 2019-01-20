@@ -15,11 +15,11 @@
             <el-input type="text" v-model="forumUser.email" autocomplete="off" class="demo-form-inline"></el-input>
           </el-form-item>
           <el-form-item label="验证码" prop="code" v-if="ifcode">
-            <el-input type="text" v-model="code" autocomplete="off" ></el-input>
+            <el-input type="text" v-model="forumUser.code" ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">获取验证码</el-button>
-            <el-button type="primary" @click="tijiao" :disabled="dis">注册</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')" :disabled="!this.canClick">{{content}}</el-button>
+            <el-button type="primary" @click="registerUser" :disabled="dis" :loading="load">注册</el-button>
           </el-form-item>
         </el-form></el-tab-pane>
       <el-tab-pane label="快速登录" name="second">二维码</el-tab-pane>
@@ -29,7 +29,9 @@
 </template>
 
 <script>
-import {getuser} from '../util/http'
+import {registerUser} from '../util/http'
+
+import {getCode} from '../util/http'
 export default {
   name: 'register',
   data () {
@@ -41,6 +43,10 @@ export default {
       rcode:'1',
       code:'',
       dis:true,
+      canClick:true,
+      content: '发送验证码',  // 按钮里显示的内容
+      totalTime: 60,      //记录具体倒计时时间
+      load:false,
       forumUser: {
         username: '',
         email: '',
@@ -80,23 +86,64 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      if (!this.canClick) return  //改动的是这两行代码
+      this.canClick = false
+      this.content = this.totalTime + 's后重新发送'
+      let clock = window.setInterval(() => {
+        this.totalTime--
+        this.content = this.totalTime + 's后重新发送'
+        if (this.totalTime < 0) {
+          window.clearInterval(clock)
+          this.content = '重新发送验证码'
+          this.totalTime = 10
+          this.canClick = true  //这里重新开启
+        }
+      },1000)
       this.$refs[formName].validate((valid) => {
+        this.dis=false
         if (valid) {
           console.log(JSON.stringify(this.forumUser))
-          let params =this.forumUser
-          getuser(params).then(res => {
+          let params ={
+           email:this.forumUser.email
+          }
+          getCode(params).then(res => {
             this.ifcode=true
             this.open()
             console.log(res)
-            this.rcode=res.data()
-            this.dis=false
+            this.rcode=res.data
+            console.log(this.rcode)
           })
         }
       })
     },
-    tijiao(){
-      if (this.code==this.rcode){
-        this.toLogin();
+    registerUser(){
+      let params=this.forumUser
+      this.load=true
+      if (this.forumUser.code==this.rcode){
+        registerUser(params).then(res => {
+          if (res.code==200) {
+            this.$alert('注册成功', '提醒', {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$message({
+                  type: 'success',
+                  message: `注册成功`
+                });
+              }
+            });
+            this.toLogin();
+          }else{
+            this.$alert('注册失败', '提醒', {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$message({
+                  type: 'info',
+                  message: `注册失败，请重新注册`
+                });
+              }
+            });
+          }
+        })
       } else{
         this.$message.error(`验证码不正确，请重新输入`);
         this.code=''

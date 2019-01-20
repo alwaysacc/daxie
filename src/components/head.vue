@@ -1,12 +1,10 @@
 <template>
-  <div id="head">
+  <div id="heads">
     <el-row >
       <el-col>
         <el-menu
-          :default-active="activeIndex2"
           class="el-menu-demo"
           mode="horizontal"
-          @select="handleSelect"
           background-color="#FA7A1F"
           text-color="#000"
           active-text-color="#FF0000">
@@ -17,20 +15,18 @@
           <el-row type="flex" align="middle" class="login">
             <el-col>
               <el-autocomplete class="scarh"
-                               v-model="state4"
-                               :fetch-suggestions="querySearchAsync"
+                               v-model="state"
                                placeholder="搜索" suffix-icon="el-icon-search"
-                               @select="handleSelect"
               ></el-autocomplete>
             </el-col>
             <el-col  :span="2">
               <el-menu-item index="4" class="login"><img class="xiaoxi" src="../image/notice.png"/></el-menu-item></el-col>
-            <el-col  :span="2" v-if="islogin">
+            <el-col  :span="2" v-if="this.$store.state.islogin">
               <el-menu-item index="4" class="login"><router-link to="/login" >登录</router-link></el-menu-item></el-col>
-            <el-col :span="2"  v-if="islogin">
+            <el-col :span="2"  v-if="this.$store.state.islogin">
               <el-menu-item index="5" class="login"><router-link to="/register">注册</router-link></el-menu-item>
             </el-col>
-            <el-col :span="4" v-if="!islogin"> <router-link to="/userHome"><el-menu-item index="6" class="login"><img src="../image/img.jpg"/>aaa </el-menu-item></router-link></el-col>
+            <el-col :span="4" v-if="!this.$store.state.islogin"> <router-link to="/userHome"><el-menu-item index="6" class="login"><img src="../image/img.jpg"/>{{this.$store.state.user.username }}</el-menu-item></router-link></el-col>
           </el-row>
         </el-menu>
       </el-col>
@@ -39,17 +35,26 @@
 </template>
 
 <script>
+import store from "../store/store";
+
 export default {
-  name: 'head',
+  name: 'heads',
   data () {
     return {
-      islogin: true
+      state:'',
+      state4:'',
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
+  #heads{
+    width: 100%;
+    position:fixed;
+    top:0px;
+    z-index:9999
+  }
   .el-menu-demo {
     padding-left: 20%;
     padding-right: 20%;

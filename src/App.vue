@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <y-header></y-header>
+    <span class="blank" style="height:50px;"></span>
     <router-view ></router-view>
+    <span class="blank" style="height:20px;"></span>
     <y-footer></y-footer>
     <totop></totop>
   </div>
@@ -18,7 +20,7 @@ export default {
     YHeader,
     YFooter,
     Totop
-  }
+  },
 }
 
 </script>
@@ -34,7 +36,7 @@ export default {
     font-size: 16px;
     width: 100%;
     height:auto;
-    margin-bottom: 100px;
+    padding-bottom: 80px;
   }
-
+  .blank{ clear:both; display:block; overflow:hidden;}
 </style>

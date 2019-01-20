@@ -1,24 +1,23 @@
 <template>
 <div id="login">
 <div class="center-div">
-  <el-tabs v-model="activeName" type="card" stretch="true">
+  <el-tabs v-model="activeName" type="card" stretch>
     <el-tab-pane label="账号登录" name="first">
-      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="pass">
-        <el-input type="text" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+      <el-form :model="forumUser" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="用户名" prop="username">
+        <el-input type="text" v-model="forumUser.username" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="checkPass">
-        <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input type="password" v-model="forumUser.password" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="验证码" prop="age">
-        <el-input v-model.number="ruleForm2.age"></el-input>
+      <el-form-item label="验证码" prop="code">
+        <el-input v-model.number="forumUser.code"></el-input>
       </el-form-item>
       <el-form-item>
         <el-radio v-model="radio" label="1">记住密码</el-radio>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
-        <el-button @click="resetForm('ruleForm2')">重置</el-button>
       </el-form-item>
     </el-form>
     </el-tab-pane>
@@ -30,49 +29,35 @@
 </template>
 
 <script>
-
+import {login} from '../util/http'
 export default {
   name: 'login',
   data () {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('验证码不能为空'))
-      } else {
-        callback()
-      }
-    }
-    var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入用户名'))
-      } else {
-        callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        callback()
-      }
-    }
     return {
       activeName: 'first',
       radio: '1',
-      ruleForm2: {
-        pass: '',
-        checkPass: '',
-        age: ''
+      forumUser: {
+        username: '',
+        password: '',
+        code: ''
       },
       rules2: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' }
+        username: [{
+          required: true,
+          message: '请输入用户名',
+          trigger: 'blur'
+        },
         ],
-        checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
-        ],
-        age: [
-          { validator: checkAge, trigger: 'blur' }
-        ]
+        password: [{
+          required: true,
+          message: '请输入密码',
+          trigger: 'blur'
+        }],
+        code: [{
+          required: true,
+          message: '请输入验证码',
+          trigger: 'blur'
+        }],
       }
     }
   },
@@ -81,14 +66,36 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert('submit!')
+          let params=this.forumUser
+          login(params).then(res => {
+            if (res.code===200){
+              this.$message({
+                type: 'success',
+                message: `登录成功`
+              });
+              this.$store.commit('$setStat', false)
+              this.$store.commit('$setUser', res.data)
+              console.log(this.$store.state.user)
+              console.log(this.$store.state.islogin)
+              this.toHome()
+            }else{
+              this.$message({
+                type: 'info',
+                message: res.message
+              });
+            }
+            console.log(res)
+          })
         } else {
           console.log('error submit!!')
           return false
         }
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    toHome(){
+      this.$router.push({
+        path: '/'
+      })
     }
   }
 }

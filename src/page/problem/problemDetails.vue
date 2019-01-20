@@ -196,7 +196,9 @@ export default {
   }
 
   .center {
-    padding: 0 20%;
+    padding:0 20%;
+    margin-top: 20px;
+    height: 100%;
   }
 
   .left {

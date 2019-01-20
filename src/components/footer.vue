@@ -6,7 +6,6 @@
     <el-row>
       <el-col>Copyright ©2017, exrick.cn Co., Ltd. All Rights Reserved.</el-col>
     </el-row>
-    <div></div>
   </div>
 </template>
 
