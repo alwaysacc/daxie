@@ -28,7 +28,11 @@
             <a class="a">举报</a>
           </el-row>
         </div>
-        <div id="editor" v-show="editorShow"  class="edit" style="text-align: left"></div>
+        <div  v-show="editorShow"  class="edit">
+        <div id="editor" style="text-align: left">
+        </div>
+          <el-row><el-button type="primary" style="float: right;">提交回答</el-button></el-row>
+        </div>
         <div class="left-center">
          <a>查看全部111个回答</a>
         </div>
@@ -215,15 +219,19 @@ export default {
     font-size: 16px;
     overflow-y: auto;
     margin-bottom: 100px;
+    padding:0 20%;
   }
   .edit{
    background-color: white;
     margin: 10px 0;
   }
+  .edit button{
+    margin-top: 5px;
+  }
   .center {
-    padding:0 20%;
     margin-top: 20px;
     height: 100%;
+    width: 100%;
   }
 
   .left {
