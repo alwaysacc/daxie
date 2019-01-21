@@ -6,9 +6,11 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// 引入时间格式化组件
+import date from './util/date'
 import store from './store/store'
 // 定义全局变量
-
+Object.keys(date).forEach(key => Vue.filter(key, date[key]))
 // 引用
 var E = require('wangeditor') // 使用 npm 安装
 

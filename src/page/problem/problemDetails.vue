@@ -4,10 +4,10 @@
       <div class="left">
         <div class="left-top">
           <el-row class="biaoti">
-            <h2>为什么语言里要提供“反射”功能？</h2>
+            <h3>{{problem.title}}</h3>
           </el-row>
           <el-row>
-            <el-col><p>为什么需要反射，这不是破坏了封装吗?</p></el-col>
+            <el-col><p v-html="problem.content"></p></el-col>
           </el-row>
           <el-row>
             <el-col>
@@ -19,15 +19,16 @@
           </el-row>
           <el-row class="bott">
             <el-button type="primary">关注问题</el-button>
-            <el-button type="primary" plain><i class="el-icon-edit-outline"></i> 写回答</el-button>
+            <el-button type="primary" plain @click="editors"><i class="el-icon-edit-outline"></i> 写回答</el-button>
             <el-button plain><i class="el-icon-circle-plus-outline"></i>&nbsp;邀请问答</el-button>
-            <a class="a">评论5</a>
-            <a class="a">浏览555</a>
-            <a class="a">关注111</a>
+            <a class="a">5评论</a>
+            <a class="a">555浏览</a>
+            <a class="a">{{problem.followcount}}关注</a>
             <a class="a">分享</a>
             <a class="a">举报</a>
           </el-row>
         </div>
+        <div id="editor" v-show="editorShow"  class="edit" style="text-align: left"></div>
         <div class="left-center">
          <a>查看全部111个回答</a>
         </div>
@@ -153,6 +154,8 @@
 </template>
 
 <script>
+import Editor from 'wangeditor'
+import 'wangeditor/release/wangEditor.min.css'
 export default {
   name: 'problemDetails',
   data () {
@@ -161,7 +164,9 @@ export default {
       show: true,
       button: false,
       input: 24,
-      butt: 0
+      butt: 0,
+      problem: {},
+      editorShow: false
     }
   },
   methods: {
@@ -178,8 +183,25 @@ export default {
       this.button = false
       this.input = 24
       this.butt = 0
+    },
+    editors () {
+      this.editorShow = !this.editorShow
+      this.mounted()
     }
   },
+  created () {
+    this.problem = this.$route.query.problem
+    console.log(this.$route.query.problemid)
+  },
+  mounted () {
+    this.editor = new Editor('#editor')
+    // this.editor.customConfig.uploadImgServer = '/upload'
+    this.editor.customConfig.onchange = (html) => {
+      this.article.content = html
+    }
+    this.editor.create()
+    this.getSortList()
+  }
 }
 </script>
 
@@ -194,7 +216,10 @@ export default {
     overflow-y: auto;
     margin-bottom: 100px;
   }
-
+  .edit{
+   background-color: white;
+    margin: 10px 0;
+  }
   .center {
     padding:0 20%;
     margin-top: 20px;
@@ -210,12 +235,14 @@ export default {
   .left-top {
     background-color: white;
     text-align: left;
-    margin-top: 20px;
+    margin-top: 10px;
     padding-left: 20px;
   }
 
   .left-top .biaoti {
     height: 40px;
+    line-height: 40px;
+    margin-bottom: 10px;
   }
 
   .left-top p {

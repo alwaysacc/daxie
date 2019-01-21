@@ -9,10 +9,10 @@
       <el-row class="line">
         选择分类：<el-select v-model="article.sortid" placeholder="请选择">
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          v-for="item in sort"
+          :key="item.sortid"
+          :label="item.sortname"
+          :value="item.sortid">
         </el-option>
       </el-select>
       </el-row>
@@ -35,69 +35,66 @@
 <script>
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
-import  {addArticle} from "../../util/http";
+import {addArticle, getSortList} from '../../util/http'
 export default {
   name: 'addArticle',
   data () {
     return {
-      article:{
-        title:'',
-        content:'',
-        incognito:'',
-        sortid:'',
-        userid:''
+      article: {
+        title: '',
+        content: '',
+        incognito: '',
+        sortid: '',
+        userid: ''
       },
-      options: [{
-        value: '1',
-        label: '黄金糕'
-      }, {
-        value: '2',
-        label: '双皮奶'
-      }, {
-        value: '3',
-        label: '蚵仔煎'
-      }, {
-        value: '4',
-        label: '龙须面'
-      }, {
-        value: '5',
-        label: '北京烤鸭'
-      }],
+      sort: {},
       value: '',
-      value2: '',
+      value2: ''
     }
   },
   methods: {
     addArticle () {
-      if (this.article.incognito==true) {
-        this.article.incognito=1
-      }else{
-        this.article.incognito=0
+      if (this.article.incognito === true) {
+        this.article.incognito = 1
+      } else {
+        this.article.incognito = 0
       }
-      this.article.userid=this.$store.state.user.userid
-      let params=this.article
-      addArticle(params).then(res=>{
-        if (res.code===200){
+      this.article.userid = this.$store.state.user.userid
+      let params = this.article
+      console.log(params)
+      addArticle(params).then(res => {
+        if (res.code === 200) {
           this.$message({
             message: '发布成功',
             type: 'success'
           })
-        }else{
+        } else {
           this.$message({
             message: res.message,
             type: 'info'
           })
         }
       })
+    },
+    getSortList () {
+      let params
+      getSortList(params).then(res => {
+        if (res.code === 200) {
+          this.sort = res.data.list
+        } else {
+          console.log('获取分类失败')
+        }
+      })
     }
   },
   mounted () {
     this.editor = new Editor('#editor')
-    //this.editor.customConfig.uploadImgServer = '/upload'
+    // this.editor.customConfig.uploadImgServer = '/upload'
     this.editor.customConfig.onchange = (html) => {
       this.article.content = html
     }
     this.editor.create()
+    this.getSortList()
   }
 }
 </script>

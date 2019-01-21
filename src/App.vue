@@ -39,4 +39,8 @@ export default {
     padding-bottom: 80px;
   }
   .blank{ clear:both; display:block; overflow:hidden;}
+  a{
+    cursor:pointer
+  }
+
 </style>

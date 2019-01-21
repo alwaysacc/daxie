@@ -4,15 +4,15 @@
         <el-row>
           <h3>提问</h3>
         </el-row>
-        <el-input v-model="input" placeholder="请输入标题"></el-input>
+        <el-input v-model="problem.title" placeholder="请输入标题"></el-input>
         <div id="editor"></div>
         <el-row class="line">
-          选择分类：<el-select v-model="value" placeholder="请选择">
+          选择分类：<el-select v-model="problem.sortid" placeholder="请选择">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in sort"
+              :key="item.sortid"
+              :label="item.sortname"
+              :value="item.sortid">
             </el-option>
           </el-select>
         </el-row>
@@ -26,51 +26,72 @@
           </el-col>
         </el-row>
         <el-row  class="btn">
-          <el-button type="primary" @click="add">提交</el-button>
+          <el-button type="primary" @click="addProblem">提交</el-button>
         </el-row>
       </div>
     </div>
 </template>
 
 <script>
+import {getSortList, addProblem} from '../../util/http'
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
 export default {
   name: 'addProblem',
   data () {
     return {
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
+      problem: {
+        title: '',
+        content: '',
+        incognito: '',
+        sortid: '',
+        userid: ''
+      },
+      sort: {},
       value: '',
       value2: ''
     }
   },
   methods: {
-    add () {
-      this.$message({
-        message: '发布成功',
-        type: 'success'
+    addProblem () {
+      if (this.problem.incognito === true) {
+        this.problem.incognito = 1
+      } else {
+        this.problem.incognito = 0
+      }
+      this.problem.userid = this.$store.state.user.userid
+      let params = this.problem
+      console.log(params)
+      addProblem(params).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          this.$message({
+            message: '发布成功',
+            type: 'success'
+          })
+        } else {
+          console.log('提问失败')
+        }
+      })
+    },
+    getSortList () {
+      let params
+      getSortList(params).then(res => {
+        if (res.code === 200) {
+          this.sort = res.data.list
+        } else {
+          console.log('获取分类失败')
+        }
       })
     }
   },
   mounted () {
+    this.getSortList()
     this.editor = new Editor('#editor')
     this.editor.customConfig.uploadImgServer = '/upload'
-
+    this.editor.customConfig.onchange = (html) => {
+      this.problem.content = html
+    }
     this.editor.create()
   }
 }

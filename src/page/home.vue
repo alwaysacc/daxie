@@ -47,7 +47,7 @@
             <el-col :span="2"><a>评论</a></el-col>
           </el-row>
 
-            <div class="comment-border">
+            <div class="comment-border"   v-for="(clist,index) in commentlist">
             <div class="comment-div-left">
               <img src="@/image/img.jpg"/>
             </div>
@@ -59,11 +59,11 @@
               </el-row>
               <el-row class="a">
                 <el-col>
-                  <a>牛逼牛逼牛逼牛逼</a>
+                  <a>{{clist.comment}}</a>
                 </el-col>
               </el-row>
               <el-row class="a sjdiv">
-                <a>2019年1月12日18:08:50</a>
+                <a>{{clist.createtime | getDate}}</a>
                 <a class="dianzan">回复</a>
                 <a class="dianzan">点赞</a>
               </el-row>
@@ -71,33 +71,6 @@
 
             </div>
               <div style="clear:both"></div>
-
-            </div>
-            <div class="comment-border">
-              <div class="comment-div-left">
-                <img src="@/image/img.jpg"/>
-              </div>
-              <div >
-                <div class="comment-div-right">
-                  <el-row class="a">
-                    <el-col>
-                      <a style="font-weight: bold">哈哈哈哈</a></el-col>
-                  </el-row>
-                  <el-row class="a">
-                    <el-col>
-                      <a>牛逼牛逼牛逼牛逼</a>
-                    </el-col>
-                  </el-row>
-                  <el-row class="a sjdiv">
-                    <a>2019年1月12日18:08:50</a>
-                    <a class="dianzan">回复</a>
-                    <a class="dianzan">点赞</a>
-                  </el-row>
-                </div>
-
-              </div>
-              <div style="clear:both"></div>
-
             </div>
             <div class="comment-input">
               <el-row>
@@ -148,10 +121,7 @@
 
 <script>
 /* eslint-disable no-undef */
-import {getHomeList} from "../util/http";
-import {getSortList} from "../util/http";
-import {addComment,getCommentList} from "../util/http";
-
+import {getSortList, getHomeList, addComment, getCommentList} from '../util/http'
 export default{
   name: 'home',
   data () {
@@ -160,32 +130,32 @@ export default{
       butt: 0,
       isButton: '0',
       button: false,
-      articlelist:{},
-      sortlist:{},
-      comments:{
-        forid:'',
-        userid:'',
-        comment:''
+      articlelist: {},
+      sortlist: {},
+      comments: {
+        forid: '',
+        userid: '',
+        comment: ''
       },
-      commentlist:{}
+      commentlist: {}
     }
   },
 
   methods: {
     seeAll (index) {
-      this.$set(this.articlelist[index], 'seeall', ! this.articlelist[index].seeall);
+      this.$set(this.articlelist[index], 'seeall', !this.articlelist[index].seeall)
     },
-    pinglun (index,articleid) {
+    pinglun (index, articleid) {
       console.log(articleid)
-      let params={
-        forid:articleid
+      let params = {
+        forid: articleid
       }
-      getCommentList(params).then(res=>{
+      getCommentList(params).then(res => {
         console.log(res)
-        if (res.code=200){
-          this.$set(this.articlelist[index], 'comments', ! this.articlelist[index].comments);
-          this.commentlist=res.data.list
-        }else{
+        if (res.code === 200) {
+          this.$set(this.articlelist[index], 'comments', !this.articlelist[index].comments)
+          this.commentlist = res.data
+        } else {
 
         }
       })
@@ -203,108 +173,83 @@ export default{
       this.input = 24
       this.butt = 0
     },
-    //获取文章列表
-    getHomeList(){
-      let params={page:0,size:10}
-      getHomeList(params).then(res=>{
+    // 获取文章列表
+    getHomeList () {
+      let params = {page: 0, size: 10}
+      getHomeList(params).then(res => {
         console.log(res)
-        if (res.code===200){
-          this.articlelist=res.data.list
-          let len = this.articlelist.length;
-          for(let i = 0; i < len; i++) {
-            this.$set(this.articlelist[i], 'seeall', true);
-            this.$set(this.articlelist[i], 'comments', false);
+        if (res.code === 200) {
+          this.articlelist = res.data.list
+          let len = this.articlelist.length
+          for (let i = 0; i < len; i++) {
+            this.$set(this.articlelist[i], 'seeall', true)
+            this.$set(this.articlelist[i], 'comments', false)
           }
-        }else{
+        } else {
 
         }
       })
     },
-    //获取分类列表
-    getSortList(){
-      let param={page:0,size:10}
-      getSortList(param).then(res=>{
-        if (res.code===200){
-          this.sortlist=res.data.list
+    // 获取分类列表
+    getSortList () {
+      let param = {page: 0, size: 10}
+      getSortList(param).then(res => {
+        if (res.code === 200) {
+          this.sortlist = res.data.list
         }
       })
     },
-    addComment(articleid){
-      this.comments.forid=articleid
-      this.comments.userid=this.$store.state.user.userid
-      let params=this.comments
+    addComment (articleid) {
+      this.comments.forid = articleid
+      this.comments.userid = this.$store.state.user.userid
+      let params = this.comments
 
-      addComment(params).then(res=>{
+      addComment(params).then(res => {
         console.log(res)
-        if (res.code===200){
-            this.$message({
-              type: 'success',
-              message: `评论成功`
-            });
-        }else{
+        if (res.code === 200) {
+          this.$message({
+            type: 'success',
+            message: `评论成功`
+          })
+        } else {
           this.$message({
             type: 'info',
             message: `评论失败`
-          });
+          })
         }
       })
       console.log(this.comment)
     }
+
   },
-  created(){
+  created () {
+    var date = '20190121101630'
+    var n = date.substring(0, 4)
+    var y = date.substring(4, 6)
+    var r = date.substring(6, 8)
+    var s = date.substring(8, 10)
+    var f = date.substring(10, 12)
+    var m = date.substring(12, 14)
+    var result = n + '年' + y + '月' + r + '日' + ' ' + s + ':' + f + ':' + m
+    console.log(result)
     this.getHomeList()
     this.getSortList()
-// 将当前时间换成时间格式字符串
-   // var timestamp3 = 1403058804;
-    var timestamp3 = 201912020115;
-    var newDate = new Date();
-    newDate.setTime(timestamp3);
-// Wed Jun 18 2014
-    console.log(newDate.toDateString());
-// Wed, 18 Jun 2014 02:33:24 GMT
-    console.log(newDate.toGMTString());
-// 2014-06-18T02:33:24.000Z
-    console.log(newDate.toISOString());
-// 2014-06-18T02:33:24.000Z
-    console.log(newDate.toJSON());
-// 2014年6月18日
-    console.log(newDate.toLocaleDateString());
-// 2014年6月18日 上午10:33:24
-    console.log(newDate.toLocaleString());
-// 上午10:33:24
-    console.log(newDate.toLocaleTimeString());
-// Wed Jun 18 2014 10:33:24 GMT+0800 (中国标准时间)
-    console.log(newDate.toString());
-// 10:33:24 GMT+0800 (中国标准时间)
-    console.log(newDate.toTimeString());
-// Wed, 18 Jun 2014 02:33:24 GMT
-    console.log(newDate.toUTCString());
-
-    Date.prototype.format = function(format) {
-      var date = {
-        "M+": this.getMonth() + 1,
-        "d+": this.getDate(),
-        "h+": this.getHours(),
-        "m+": this.getMinutes(),
-        "s+": this.getSeconds(),
-        "q+": Math.floor((this.getMonth() + 3) / 3),
-        "S+": this.getMilliseconds()
-      };
-      if (/(y+)/i.test(format)) {
-        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
-      }
-      for (var k in date) {
-        if (new RegExp("(" + k + ")").test(format)) {
-          format = format.replace(RegExp.$1, RegExp.$1.length == 1
-            ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
-        }
-      }
-      return format;
-    }
-    console.log(newDate.format('yyyy-MM-dd h:m:s'));
   },
-  mounted(){
+  mounted () {
 
+  },
+  filters: {
+    formatDate: function (value) {
+      var date = value
+      var n = date.substring(0, 4)
+      var y = date.substring(4, 6)
+      var r = date.substring(6, 8)
+      var s = date.substring(8, 10)
+      var f = date.substring(10, 12)
+      var m = date.substring(12, 14)
+      var result = n + '年' + y + '月' + r + '日' + ' ' + s + ':' + f + ':' + m
+      return result
+    }
   }
 }
 </script>
@@ -319,9 +264,6 @@ export default{
     width: 100%;
     color: black;
     font-size: 16px;
-  }
-  a{
-    cursor:pointer
   }
 
   .centers{

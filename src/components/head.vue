@@ -35,16 +35,15 @@
 </template>
 
 <script>
-import store from "../store/store";
 
 export default {
   name: 'heads',
   data () {
     return {
-      state:'',
-      state4:'',
+      state: '',
+      state4: ''
     }
-  },
+  }
 }
 </script>
 
