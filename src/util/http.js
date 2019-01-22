@@ -1,15 +1,15 @@
 import http from '../util/axios'
 // 注册
 export const registerUser = (params) => {
-  return http.fetchPost('/forumuser/register', params)
+  return http.fetchPost('/user/register', params)
 }
 // 发送验证码到邮箱，并获取
 export const getCode = (params) => {
-  return http.fetchPost('/forumuser/getCode', params)
+  return http.fetchPost('/user/getCode', params)
 }
 // 登录
 export const login = (params) => {
-  return http.fetchPost('/forumuser/login', params)
+  return http.fetchPost('/user/login', params)
 }
 // 发帖
 export const addArticle = (params) => {
@@ -35,8 +35,15 @@ export const getCommentList = (params) => {
 export const addProblem = (params) => {
   return http.fetchPost('/problem/add', params)
 }
-
 // 获取推荐问题
 export const getRecommendProblem = (params) => {
   return http.fetchPost('/problem/list', params)
+}
+// 问题详情页，获取回答
+export const getReplyList = (params) => {
+  return http.fetchPost('/reply/getReply', params)
+}
+// 回答问题
+export const addReply = (params) => {
+  return http.fetchPost('/reply/add', params)
 }

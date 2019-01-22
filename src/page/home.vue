@@ -45,7 +45,7 @@
           <div v-if="article.comments" class="comment-div">
             <el-row class="comment">
             <el-col :span="2"><a>评论</a></el-col>
-          </el-row>
+            </el-row>
 
             <div class="comment-border"   v-for="(clist,index) in commentlist">
             <div class="comment-div-left">
@@ -150,6 +150,7 @@ export default{
       let params = {
         forid: articleid
       }
+      // 获取评论
       getCommentList(params).then(res => {
         console.log(res)
         if (res.code === 200) {
@@ -199,6 +200,7 @@ export default{
         }
       })
     },
+    // 添加评论
     addComment (articleid) {
       this.comments.forid = articleid
       this.comments.userid = this.$store.state.user.userid
@@ -223,33 +225,11 @@ export default{
 
   },
   created () {
-    var date = '20190121101630'
-    var n = date.substring(0, 4)
-    var y = date.substring(4, 6)
-    var r = date.substring(6, 8)
-    var s = date.substring(8, 10)
-    var f = date.substring(10, 12)
-    var m = date.substring(12, 14)
-    var result = n + '年' + y + '月' + r + '日' + ' ' + s + ':' + f + ':' + m
-    console.log(result)
     this.getHomeList()
     this.getSortList()
   },
   mounted () {
 
-  },
-  filters: {
-    formatDate: function (value) {
-      var date = value
-      var n = date.substring(0, 4)
-      var y = date.substring(4, 6)
-      var r = date.substring(6, 8)
-      var s = date.substring(8, 10)
-      var f = date.substring(10, 12)
-      var m = date.substring(12, 14)
-      var result = n + '年' + y + '月' + r + '日' + ' ' + s + ':' + f + ':' + m
-      return result
-    }
   }
 }
 </script>
@@ -275,7 +255,7 @@ export default{
   .left{
     left: 20%;
     width: 8%;
-    background-color: white;
+    background-color: #FFFFFF;
     padding: 0 5px;
     height: auto;
     position:fixed;
@@ -294,7 +274,7 @@ export default{
   }
   .right-top{
     height: 60px;
-    background-color: white;
+    background-color: #FFFFFF;
     padding-top: 20px;
   }
   .el-icon-circle-plus-outline{
@@ -333,13 +313,14 @@ export default{
   .tiezi{
     border: bisque solid 1px;
     padding: 10px;
-    background-color: white;
+    background-color: #FFFFFF;
     margin-bottom: 20px;
     width: 100%;
   }
   .tiezi   h3{
     float: left;
     overflow: hidden;
+    color: black;
   }
   .zuozhe{
     float: left;
@@ -354,7 +335,7 @@ export default{
   .comment-div{
     height: auto;
     overflow: hidden;
-    padding-top: 50px;
+    padding-top: 20px;
   }
   .comment{
     padding-bottom: 20px;

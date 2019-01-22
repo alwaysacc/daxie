@@ -23,7 +23,7 @@
             <el-button plain><i class="el-icon-circle-plus-outline"></i>&nbsp;邀请问答</el-button>
             <a class="a">5评论</a>
             <a class="a">555浏览</a>
-            <a class="a">{{problem.followcount}}关注</a>
+            <a class="a" href="#">{{problem.followcount}}关注</a>
             <a class="a">分享</a>
             <a class="a">举报</a>
           </el-row>
@@ -31,7 +31,7 @@
         <div  v-show="editorShow"  class="edit">
         <div id="editor" style="text-align: left">
         </div>
-          <el-row><el-button type="primary" style="float: right;">提交回答</el-button></el-row>
+          <el-row><el-button type="primary" style="float: right;" @click="addReply">提交回答</el-button></el-row>
         </div>
         <div class="left-center">
          <a>查看全部111个回答</a>
@@ -43,7 +43,7 @@
           </el-row>
         </div>
         <div>
-          <div class="answer">
+          <div class="answer" v-for="(repl,index) in replyList">
             <el-row class="answer-top">
               <el-col :span="5" class="touxiang">
                <img src="@/image/img.jpg"/>
@@ -55,23 +55,21 @@
             </el-row>
             <el-row class="content">
               <el-col :span="24">
-              <div v-html="answer">
+              <div v-html="repl.content">
               </div>
               </el-col>
             </el-row>
-            <div style="clear:both"></div>
             <el-row class="answer-bottom">
               <a>点赞</a>
-              <a @click="pinglun">评论</a>
+              <a @click="pinglun(index,repl.replyid)"> {{repl.comments? '收起评论':'评论'}}</a>
               <a>分享</a>
               <a>收藏</a>
             </el-row>
-            <div v-if="show" class="comment-div">
+            <div v-show="repl.comments" class="comment-div">
               <el-row class="comment">
                 <el-col :span="2"><a>评论</a></el-col>
               </el-row>
-
-              <div class="comment-border">
+              <div class="comment-border" v-for="(comment,index) in commentlist">
                 <div class="comment-div-left">
                   <img src="@/image/img.jpg"/>
                 </div>
@@ -83,37 +81,11 @@
                     </el-row>
                     <el-row class="a">
                       <el-col>
-                        <a>牛逼牛逼牛逼牛逼</a>
+                        <a>{{comment.comment}}</a>
                       </el-col>
                     </el-row>
                     <el-row class="a sjdiv">
-                      <a>2019年1月12日18:08:50</a>
-                      <a class="dianzan">回复</a>
-                      <a class="dianzan">点赞</a>
-                    </el-row>
-                  </div>
-
-                </div>
-                <div style="clear:both"></div>
-
-              </div>
-              <div class="comment-border">
-                <div class="comment-div-left">
-                  <img src="@/image/img.jpg"/>
-                </div>
-                <div >
-                  <div class="comment-div-right">
-                    <el-row class="a">
-                      <el-col>
-                        <a style="font-weight: bold">哈哈哈哈</a></el-col>
-                    </el-row>
-                    <el-row class="a">
-                      <el-col>
-                        <a>牛逼牛逼牛逼牛逼</a>
-                      </el-col>
-                    </el-row>
-                    <el-row class="a sjdiv">
-                      <a>2019年1月12日18:08:50</a>
+                      <a>{{comment.createtime | getDate}}</a>
                       <a class="dianzan">回复</a>
                       <a class="dianzan">点赞</a>
                     </el-row>
@@ -126,10 +98,10 @@
               <div class="comment-input">
                 <el-row>
                   <el-col :span="input">
-                    <el-input  class="el_input1"  placeholder="请输入内容" @focus="fsbutton" @blur="leave"></el-input>
+                    <el-input  class="el_input1" v-model="comments.comment"  placeholder="请输入内容" @focus="fsbutton"></el-input>
                   </el-col>
                   <el-col :span="butt" style="padding-left: 20px">
-                    <el-button type="primary" v-if="button">提交</el-button>
+                    <el-button type="primary" v-if="button"  @click="addComment(repl.replyid)" >提交</el-button>
                   </el-col>
                 </el-row>
               </div>
@@ -160,23 +132,47 @@
 <script>
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
+import {addReply, getReplyList, addComment, getCommentList} from '../../util/http'
+
 export default {
   name: 'problemDetails',
   data () {
     return {
-      answer: '<p>就举个例子好了：你要做一个属性编辑器，可以通过UI编辑一个对象的某些成员的值，而且你想支持很多类型的对象。如果没有反射，你要么只能hard code, 要么让这些对象人肉实现反射接口: virtual void SetParameter(String parameterName, String parameterValue); 这是一件多么烦人的事情。</p><p>再比如说自动序列化。给一个对象，把他保存成文件。没有反射你只能为每个对象手工写load和store函数。有了反射之后你可以一口气写一个Serialize&lt;T&gt;(T obj)然后遍历每个成员，看看有没有被标记为[序列化], 然后递归地去序列化该成员即可，多么方便。</p>一个有反射的语言通过同一份代码就可以解决所有上述问题。<span class="RichText ztext CopyrightRichText-richText" itemprop="text"><p>就举个例子好了：你要做一个属性编辑器，可以通过UI编辑一个对象的某些成员的值，而且你想支持很多类型的对象。如果没有反射，你要么只能hard code, 要么让这些对象人肉实现反射接口: virtual void SetParameter(String parameterName, String parameterValue); 这是一件多么烦人的事情。</p><p>再比如说自动序列化。给一个对象，把他保存成文件。没有反射你只能为每个对象手工写load和store函数。有了反射之后你可以一口气写一个Serialize&lt;T&gt;(T obj)然后遍历每个成员，看看有没有被标记为[序列化], 然后递归地去序列化该成员即可，多么方便。</p>一个有反射的语言通过同一份代码就可以解决所有上述问题。</span>',
-      show: true,
       button: false,
       input: 24,
       butt: 0,
       problem: {},
-      editorShow: false
+      editorShow: false,
+      reply: {
+        userid: '',
+        problemid: '',
+        contnet: '',
+        incognito: ''
+      },
+      comments: {
+        forid: '',
+        userid: '',
+        comment: ''
+      },
+      replyList: {},
+      commentlist: {}
     }
   },
   methods: {
-    pinglun () {
-      this.show = !this.show
-      this.pl = !pl
+    pinglun (index, replyid) {
+      let params = {
+        forid: replyid
+      }
+      // 获取评论
+      getCommentList(params).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          this.replyList[index].comments=!this.replyList[index].comments
+          this.commentlist = res.data
+        } else {
+
+        }
+      })
     },
     fsbutton () {
       this.button = true
@@ -188,23 +184,75 @@ export default {
       this.input = 24
       this.butt = 0
     },
+    // 显示回答问题输入框
     editors () {
       this.editorShow = !this.editorShow
-      this.mounted()
+    },
+    // 添加回答
+    addReply () {
+      this.reply.userid = this.$store.state.user.userid
+      this.reply.problemid = this.problem.problemid
+      let params = this.reply
+      addReply(params).then(res => {
+        console.log(res)
+        if (res.code === 200) {}
+      })
+    },
+    getReplyList () {
+      let params = {
+        problemid: this.problem.problemid
+      }
+      getReplyList(params).then(res => {
+        if (res.code === 200) {
+          this.replyList = res.data
+          let len = this.replyList.length
+          for (let i = 0; i < len; i++) {
+            this.$set(this.replyList[i], 'comments', false)
+          }
+        } else {
+          console.log(res.message)
+        }
+      })
+    },
+    // 添加评论
+    addComment (forid) {
+      if (this.comments.comment === '') {
+        this.$message({
+          type: 'info',
+          message: `评论内容不能为空`
+        })
+      } else {
+        this.comments.forid = forid
+        this.comments.userid = this.$store.state.user.userid
+        let params = this.comments
+        addComment(params).then(res => {
+          console.log(res)
+          if (res.code === 200) {
+            this.$message({
+              type: 'success',
+              message: `评论成功`
+            })
+          } else {
+            this.$message({
+              type: 'info',
+              message: `评论失败`
+            })
+          }
+        })
+      }
     }
   },
   created () {
     this.problem = this.$route.query.problem
-    console.log(this.$route.query.problemid)
+    this.getReplyList()
   },
   mounted () {
     this.editor = new Editor('#editor')
     // this.editor.customConfig.uploadImgServer = '/upload'
     this.editor.customConfig.onchange = (html) => {
-      this.article.content = html
+      this.reply.content = html
     }
     this.editor.create()
-    this.getSortList()
   }
 }
 </script>
@@ -230,7 +278,7 @@ export default {
   }
   .center {
     margin-top: 20px;
-    height: 100%;
+    height: auto;
     width: 100%;
   }
 
@@ -280,6 +328,7 @@ export default {
     margin-top: 10px;
     background-color: white;
     text-align: left;
+    margin-bottom: 10px;
   }
   .paixu a{
     padding-left: 10px;
@@ -293,7 +342,6 @@ export default {
   .paixu .top{
     height: 40px;
     line-height: 40px;
-    border-bottom: 1px darkgrey solid;
     padding-bottom: 20px;
   }
   .answer{
@@ -301,6 +349,7 @@ export default {
     padding-top: 10px;
     padding-left: 20px;
     text-align: left;
+    margin-bottom: 10px;
   }
   .answer .answer-top .touxiang{
     width: 30px;
@@ -309,18 +358,18 @@ export default {
   }
   .answer-bottom{
     padding-top: 20px;
-    margin-top: 20px;
+    padding-bottom: 10px;
     border-top: darkgrey solid 1px;
   }
   .answer-bottom a{
     padding-right: 20px;
-    font-size: 20px;
+    font-size: 16px;
+    cursor:pointer
   }
 
   .comment-div{
-    height: auto;
     overflow: hidden;
-    padding-top: 50px;
+    padding-top: 20px;
   }
   .comment{
     padding-bottom: 20px;

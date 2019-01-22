@@ -4,18 +4,18 @@
   <div class="center-div">
     <el-tabs  v-model="activeName"  type="card" stretch>
       <el-tab-pane label="注册账号" name="first">
-        <el-form  status-icon :rules="rules" :model="forumUser"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form  status-icon :rules="rules" :model="user"  ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="用户名" prop="username">
-            <el-input type="text" v-model="forumUser.username" autocomplete="off"></el-input>
+            <el-input type="text" v-model="user.username" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password" >
-            <el-input v-model="forumUser.password" type="password"></el-input>
+            <el-input v-model="user.password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input type="text" v-model="forumUser.email" autocomplete="off" class="demo-form-inline"></el-input>
+            <el-input type="text" v-model="user.email" autocomplete="off" class="demo-form-inline"></el-input>
           </el-form-item>
           <el-form-item label="验证码" prop="code" v-if="ifcode">
-            <el-input type="text" v-model="forumUser.code" ></el-input>
+            <el-input type="text" v-model="user.code" ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')" :disabled="!this.canClick">{{content}}</el-button>
@@ -47,7 +47,7 @@ export default {
       content: '发送验证码',  // 按钮里显示的内容
       totalTime: 60,      //记录具体倒计时时间
       load:false,
-      forumUser: {
+      user: {
         username: '',
         email: '',
         password: '',
@@ -102,9 +102,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         this.dis=false
         if (valid) {
-          console.log(JSON.stringify(this.forumUser))
+          console.log(JSON.stringify(this.user))
           let params ={
-           email:this.forumUser.email
+           email:this.user.email
           }
           getCode(params).then(res => {
             this.ifcode=true
@@ -117,9 +117,9 @@ export default {
       })
     },
     registerUser(){
-      let params=this.forumUser
+      let params=this.user
       this.load=true
-      if (this.forumUser.code==this.rcode){
+      if (this.user.code==this.rcode){
         registerUser(params).then(res => {
           if (res.code==200) {
             this.$alert('注册成功', '提醒', {
