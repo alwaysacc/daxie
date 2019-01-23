@@ -47,3 +47,15 @@ export const getReplyList = (params) => {
 export const addReply = (params) => {
   return http.fetchPost('/reply/add', params)
 }
+// 查看是否关注
+export const getFollew = (params) => {
+  return http.fetchPost('/relation/getFollew', params)
+}
+// 关注
+export const follew = (params) => {
+  return http.fetchPost('/relation/add', params)
+}
+// 取消关注
+export const cancelFollew = (params) => {
+  return http.fetchPost('/relation/update', params)
+}

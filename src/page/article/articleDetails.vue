@@ -3,14 +3,14 @@
     <div class="center">
       <div class="left">
         <el-row>
-          <el-col><h3>如果烟抽了对身体好，那世界会变成怎么样？</h3></el-col>
+          <el-col><h3>{{article.title}}</h3></el-col>
         </el-row>
-        <el-row>
-          <el-col :span="6">2019年1月12日17:18:11</el-col>
-          <el-col :span="6">阅读数：6666</el-col>
-          <el-col :span="3">收藏</el-col>
+        <el-row class="dateline">
+          <a>{{article.createtime | getDate}}</a>
+          <a>  阅读数：6666</a>
+          <a>   收藏</a>
         </el-row>
-        <div class="ariicle" v-html="wenzhang">
+        <div class="ariicle" v-html="article.content">
         </div>
         <div class="left-bottom">
           <el-input
@@ -27,6 +27,7 @@
           <el-row class="comment">
             <el-col :span="2"><a>评论</a></el-col>
           </el-row>
+          <div v-for="comment in commentlist">
           <div class="comment-div-left">
             <img src="@/image/img.jpg"/>
           </div>
@@ -37,111 +38,17 @@
             </el-row>
             <el-row class="a">
               <el-col>
-              <a>牛逼牛逼牛逼牛逼</a>
+              <a>{{comment.comment}}</a>
               </el-col>
             </el-row>
             <el-row class="a sjdiv">
-              <a>2019年1月12日18:08:50</a>
+              <a>{{comment.createtime | getDate}}</a>
               <a class="dianzan">回复</a>
               <a class="dianzan">点赞</a>
             </el-row>
           </div>
-        </div>
-        <div class="comment-div">
-          <el-row class="comment">
-            <el-col :span="2"><a>评论</a></el-col>
-          </el-row>
-          <div class="comment-div-left">
-            <img src="@/image/img.jpg"/>
           </div>
-          <div class="comment-div-right">
-            <el-row class="a">
-              <el-col>
-                <a style="font-weight: bold">哈哈哈哈</a></el-col>
-            </el-row>
-            <el-row class="a">
-              <el-col>
-                <a>牛逼牛逼牛逼牛逼</a>
-              </el-col>
-            </el-row>
-            <el-row class="a sjdiv">
-              <a>2019年1月12日18:08:50</a>
-              <a class="dianzan">回复</a>
-              <a class="dianzan">点赞</a>
-            </el-row>
-          </div>
-        </div>
-        <div class="comment-div">
-          <el-row class="comment">
-            <el-col :span="2"><a>评论</a></el-col>
-          </el-row>
-          <div class="comment-div-left">
-            <img src="@/image/img.jpg"/>
-          </div>
-          <div class="comment-div-right">
-            <el-row class="a">
-              <el-col>
-                <a style="font-weight: bold">哈哈哈哈</a></el-col>
-            </el-row>
-            <el-row class="a">
-              <el-col>
-                <a>牛逼牛逼牛逼牛逼</a>
-              </el-col>
-            </el-row>
-            <el-row class="a sjdiv">
-              <a>2019年1月12日18:08:50</a>
-              <a class="dianzan">回复</a>
-              <a class="dianzan">点赞</a>
-            </el-row>
-          </div>
-        </div>
-        <div class="comment-div">
-          <el-row class="comment">
-            <el-col :span="2"><a>评论</a></el-col>
-          </el-row>
-          <div class="comment-div-left">
-            <img src="@/image/img.jpg"/>
-          </div>
-          <div class="comment-div-right">
-            <el-row class="a">
-              <el-col>
-                <a style="font-weight: bold">哈哈哈哈</a></el-col>
-            </el-row>
-            <el-row class="a">
-              <el-col>
-                <a>牛逼牛逼牛逼牛逼</a>
-              </el-col>
-            </el-row>
-            <el-row class="a sjdiv">
-              <a>2019年1月12日18:08:50</a>
-              <a class="dianzan">回复</a>
-              <a class="dianzan">点赞</a>
-            </el-row>
-          </div>
-        </div>
-        <div class="comment-div">
-          <el-row class="comment">
-            <el-col :span="2"><a>评论</a></el-col>
-          </el-row>
-          <div class="comment-div-left">
-            <img src="@/image/img.jpg"/>
-          </div>
-          <div class="comment-div-right">
-            <el-row class="a">
-              <el-col>
-                <a style="font-weight: bold">哈哈哈哈</a></el-col>
-            </el-row>
-            <el-row class="a">
-              <el-col>
-                <a>牛逼牛逼牛逼牛逼</a>
-              </el-col>
-            </el-row>
-            <el-row class="a sjdiv">
-              <a>2019年1月12日18:08:50</a>
-              <a class="dianzan">回复</a>
-              <a class="dianzan">点赞</a>
-            </el-row>
-          </div>
+
         </div>
       </div>
       <div class="right">
@@ -150,7 +57,7 @@
           <el-col :span="4"><img src="@/image/img.jpg"/></el-col>
           <el-col :span="8"><a>哈哈哈哈哈</a></el-col>
           <a class="btn2">
-          <el-button type="primary"  size="mini" round>关注</el-button></a>
+          <el-button type="primary"  size="mini" :class="{'guanzhu': !isFollew}" round @click="follew">{{ isFollew ? '关注' : '已关注'}}</el-button></a>
         </el-row>
         </div>
         <div class="right-bottom">
@@ -180,12 +87,21 @@
 </template>
 
 <script>
+import {getCommentList, follew, getFollew, cancelFollew} from '../../util/http'
 export default {
   name: 'articleDetails',
   data () {
     return {
-      wenzhang: '<p>场景一：一个四五岁的小孩满院子跑，后面追着一位母亲，手里夹着根点着的香烟，“宝宝，再抽一口，听话，最后一口……”</p><p><br/></p><p>场景二：别的孩子课间都在教室里吞云吐雾，家庭情况困难的小明由于抽不起烟，只能等他们抽完后，偷偷过去吸几口空气里残留的二手烟。放学后，善良的班主任刘老师把小明叫到办公室，从抽屉里摸出两根玉溪递给他，小明低着头，眼泪啪嗒啪嗒掉在地上。</p><p><br></p><p>场景三：火车站，即将去陌生城市上大学的小军跟父亲告别，老人布满老茧的手从兜里翻出一个油纸包，“这是你妈连夜给你卷的旱烟，带着路上抽。”</p>',
-      btn: false
+      btn: false,
+      article: {},
+      commentlist: {},
+      isFollew: true,
+      relation: {
+        userid: '',
+        operating: '',
+        foruserid: ''
+      },
+      guanzhu: {}
     }
   },
   methods: {
@@ -194,8 +110,63 @@ export default {
     },
     leave () {
       this.btn = false
+    },
+    getCommentList () {
+      let params = {
+        forid: this.article.articleid
+      }
+      // 获取评论
+      getCommentList(params).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          this.commentlist = res.data
+        } else {
+
+        }
+      })
+    },
+    // 关注和取消关注
+    follew () {
+      this.relation.userid = this.$store.state.user.userid
+      this.relation.foruserid = this.$route.query.article.userid
+      if (this.isFollew === false) {
+        this.relation.operating = 0
+        let params = this.relation
+        // 取消关注
+        follew(params).then(res => {
+          console.log(res)
+        })
+      } else {
+        this.relation.operating = 1
+        // 关注
+        let params = this.relation
+        follew(params).then(res => {
+          console.log(res)
+        })
+      }
+      this.isFollew = !this.isFollew
+    },
+    getFollew () {
+      let params = {
+        userid: this.$store.state.user.userid,
+        foruserid: this.$route.query.article.userid
+      }
+      getFollew(params).then(res => {
+        console.log(res)
+        if (res.data[0].operating === 1) {
+          this.guanzhu = res.data[0]
+          this.isFollew = false
+        } else {
+          this.isFollew = true
+        }
+      })
     }
   },
+  created () {
+    this.article = this.$route.query.article
+    this.getCommentList()
+    this.getFollew()
+  }
 }
 </script>
 
@@ -210,10 +181,19 @@ export default {
     width: 100%;
     background-color: #F6F6F6;
   }
+  .guanzhu{
+    background-color: darkgrey;
+  }
   .center{
     padding:0 20%;
     margin-top: 20px;
     height: 100%;
+  }
+  .dateline{
+    text-align: left;
+  }
+  .dateline a{
+   margin-right: 30px;
   }
   .left{
     float: left;

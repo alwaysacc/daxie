@@ -15,8 +15,9 @@
       <div class="center-div">
         <div class="tiezi"  v-for="(article,index) in articlelist">
           <el-row>
-            <router-link to="/articleDetails">
-            <el-col> <h3>{{article.title}}</h3></el-col></router-link>
+            <router-link :to="{path:'/articleDetails', query:{article:articlelist[index]}}">
+            <el-col> <h3>{{article.title}}</h3></el-col>
+            </router-link>
           </el-row>
           <div class="zuozhe" v-if="!article.seeall">
             <el-row>
