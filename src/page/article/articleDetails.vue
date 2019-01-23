@@ -140,7 +140,7 @@ export default {
         this.relation.operating = 1
         // 关注
         let params = this.relation
-        follew(params).then(res => {
+        cancelFollew(params).then(res => {
           console.log(res)
         })
       }
