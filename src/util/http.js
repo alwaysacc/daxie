@@ -19,6 +19,10 @@ export const addArticle = (params) => {
 export const getHomeList = (params) => {
   return http.fetchPost('/article/list', params)
 }
+// 文章点赞
+export const addlike = (params) => {
+  return http.fetchPost('/article/update', params)
+}
 // 查询分类
 export const getSortList = (params) => {
   return http.fetchPost('/sort/list', params)

@@ -35,10 +35,10 @@
               </span>
             </el-col>
 
-            <div @click='seeAll(index)' style="float: right"><a style="color:#FA7A1F;  " >{{article.seeall? '查看全文':'收起'}}</a></div>
+            <div @click='seeAll(index)' style="float: right"><a style="color:#FA7A1F;">{{article.seeall? '查看全文':'收起'}}</a></div>
           </el-row>
           <el-row>
-            <el-col :span="6"><a href="#">点赞</a></el-col>
+            <el-col :span="6"><a @click="like(index)">{{article.islike? '点赞':'已赞'}}{{article.likecount}}</a></el-col>
             <el-col :span="6" ><a @click="pinglun(index,article.articleid)" style=" cursor:pointer"> {{article.comments? '收起评论':'55评论'}}</a> </el-col>
             <el-col :span="6"><a href="#">分享</a> </el-col>
             <el-col :span="6"><a href="#">收藏</a> </el-col>
@@ -109,7 +109,7 @@
             <el-col class="hot">2、哈哈哈哈哈哈哈哈哈哈</el-col>
             <el-col class="hot">3、哈哈哈哈哈哈哈哈哈哈</el-col>
             <el-col class="hot">4、哈哈哈哈哈哈哈哈哈哈</el-col>
-            <el-col class="seemore" :span="8">查看更多</el-col>
+            <el-col class="seemore" :span="8"><a>查看更多</a></el-col>
           </el-row>
         </div>
       </div>
@@ -122,7 +122,7 @@
 
 <script>
 /* eslint-disable no-undef */
-import {getSortList, getHomeList, addComment, getCommentList} from '../util/http'
+import {getSortList, getHomeList, addComment, getCommentList, addlike} from '../util/http'
 export default{
   name: 'home',
   data () {
@@ -143,8 +143,9 @@ export default{
   },
 
   methods: {
+    // 查看全文
     seeAll (index) {
-      this.$set(this.articlelist[index], 'seeall', !this.articlelist[index].seeall)
+      this.articlelist[index].seeall=!this.articlelist[index].seeall
     },
     pinglun (index, articleid) {
       console.log(articleid)
@@ -160,6 +161,20 @@ export default{
         } else {
 
         }
+      })
+    },
+    // 点赞
+    like (index) {
+      console.log(this.articlelist[index].likeid)
+      if (this.articlelist[index].likeid === '') {
+        this.articlelist[index].likeid = this.$store.state.user.userid
+      } else {
+        this.articlelist[index].likeid = this.articlelist[index].likeid + ',' + this.$store.state.user.userid
+      }
+      let params = this.articlelist[index]
+      addlike(params).then(res => {
+        console.log(res)
+        this.getHomeList()
       })
     },
     blur_input () {
@@ -180,13 +195,20 @@ export default{
       let params = {page: 0, size: 10}
       getHomeList(params).then(res => {
         console.log(res)
+        var uid = this.$store.state.user.userid
         if (res.code === 200) {
           this.articlelist = res.data.list
           let len = this.articlelist.length
           for (let i = 0; i < len; i++) {
             this.$set(this.articlelist[i], 'seeall', true)
             this.$set(this.articlelist[i], 'comments', false)
+            if (this.articlelist[i].likeid.search(uid) !== -1) {
+              this.$set(this.articlelist[i], 'islike', false)
+            }else{
+              this.$set(this.articlelist[i], 'islike', true)
+            }
           }
+          console.log(this.articlelist[0].likeid.search(uid))
         } else {
 
         }
@@ -246,7 +268,9 @@ export default{
     color: black;
     font-size: 16px;
   }
-
+  #home a{
+    cursor:pointer
+  }
   .centers{
     padding:0 20%;
     margin-top: 20px;
