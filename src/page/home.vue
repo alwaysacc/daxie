@@ -66,7 +66,7 @@
               <el-row class="a sjdiv">
                 <a>{{clist.createtime | getDate}}</a>
                 <a class="dianzan">回复</a>
-                <a class="dianzan">点赞</a>
+                <a class="dianzan" :class="{'commentlike':clist.islike}" @click="likeComment(index)">{{clist.islike? '点赞':'已赞'}}</a>
               </el-row>
             </div>
 
@@ -122,7 +122,7 @@
 
 <script>
 /* eslint-disable no-undef */
-import {getSortList, getHomeList, addComment, getCommentList, addlike} from '../util/http'
+import {getSortList, getHomeList, addComment, getCommentList, addlike,likeComment} from '../util/http'
 export default{
   name: 'home',
   data () {
@@ -149,23 +149,51 @@ export default{
     },
     pinglun (index, articleid) {
       console.log(articleid)
+      // 获取评论
+      this.getCommentList(articleid)
+      this.$set(this.articlelist[index], 'comments', !this.articlelist[index].comments)
+    },
+
+    getCommentList(articleid){
       let params = {
         forid: articleid
       }
-      // 获取评论
-      getCommentList(params).then(res => {
-        console.log(res)
-        if (res.code === 200) {
-          this.$set(this.articlelist[index], 'comments', !this.articlelist[index].comments)
-          this.commentlist = res.data
+    getCommentList(params).then(res => {
+    var uid
+    if (this.$store.state.user===null) {
+      uid=''
+    }else{
+      uid = this.$store.state.user.userid
+    }
+    console.log(res)
+    if (res.code === 200) {
+      this.commentlist = res.data
+      let len = this.articlelist.length
+      for (let i = 0; i < len; i++) {
+        if (this.commentlist[i].likeid === null) {
+          this.$set(this.commentlist[i], 'islike', true)
         } else {
-
+          if (uid === '') {
+            this.$set(this.commentlist[i], 'islike', true)
+          } else {
+            if (this.commentlist[i].likeid.indexOf(uid) !== -1) {
+              this.$set(this.commentlist[i], 'islike', false)
+            } else {
+              this.$set(this.commentlist[i], 'islike', true)
+            }
+          }
         }
-      })
+      }
+      console.log(this.commentlist);
+    } else {
+
+    }
+  })
     },
-    // 点赞
+    // 点赞和取消
     like (index) {
       var uid = this.$store.state.user.userid
+      //点赞
       if (this.articlelist[index].islike) {
         if (this.articlelist[index].likeid === '') {
           this.articlelist[index].likeid = this.$store.state.user.userid
@@ -173,13 +201,15 @@ export default{
           this.articlelist[index].likeid = this.articlelist[index].likeid + ',' + this.$store.state.user.userid
         }
         this.articlelist[index].likecount = this.articlelist[index].likecount + 1
+        this.articlelist[index].islike=false
       } else {
         if (this.articlelist[index].likeid.indexOf(uid) === 0) {
-          this.articlelist[index].likeid = this.articlelist[index].likeid.replace(uid + ',', '')
+          this.articlelist[index].likeid = this.articlelist[index].likeid.replace(uid , '')
         } else {
           this.articlelist[index].likeid = this.articlelist[index].likeid.replace(','+uid, '')
         }
         this.articlelist[index].likecount = this.articlelist[index].likecount - 1
+        this.articlelist[index].islike=true
       }
       let params = this.articlelist[index]
       addlike(params).then(res => {
@@ -204,8 +234,13 @@ export default{
     getHomeList () {
       let params = {page: 0, size: 10}
       getHomeList(params).then(res => {
-        console.log(res)
-        var uid = this.$store.state.user.userid
+        console.log(this.$store.state.user)
+        var uid
+        if (this.$store.state.user===null) {
+          uid=''
+        }else{
+          uid = this.$store.state.user.userid
+        }
         if (res.code === 200) {
           this.articlelist = res.data.list
           let len = this.articlelist.length
@@ -215,10 +250,14 @@ export default{
             if (this.articlelist[i].likeid === '') {
               this.$set(this.articlelist[i], 'islike', true)
             } else {
-              if (this.articlelist[i].likeid.indexOf(uid) !== -1) {
-                this.$set(this.articlelist[i], 'islike', false)
-              } else {
+              if (uid==='') {
                 this.$set(this.articlelist[i], 'islike', true)
+              }else{
+                if (this.articlelist[i].likeid.indexOf(uid) !== -1) {
+                  this.$set(this.articlelist[i], 'islike', false)
+                } else {
+                  this.$set(this.articlelist[i], 'islike', true)
+                }
               }
             }
           }
@@ -258,8 +297,35 @@ export default{
         }
       })
       console.log(this.comment)
-    }
+    },
+    //评论点赞
+    likeComment(index) {
+      var uid = this.$store.state.user.userid
+      console.log(uid)
+      //点赞
+      if (this.commentlist[index].islike) {
+        if (this.commentlist[index].likeid === '') {
+          this.commentlist[index].likeid = this.$store.state.user.userid+','
+        } else {
+          this.commentlist[index].likeid = this.commentlist[index].likeid + ',' + this.$store.state.user.userid
+        }
+        this.commentlist[index].likecount = this.commentlist[index].likecount + 1
+        this.commentlist[index].islike = false
+      } else {
+        if (this.commentlist[index].likeid.indexOf(uid) === 0) {
+          this.commentlist[index].likeid = this.commentlist[index].likeid.replace(uid + ',', '')
+        } else {
+          this.commentlist[index].likeid = this.commentlist[index].likeid.replace(',' + uid, '')
+        }
+          this.commentlist[index].likecount = this.commentlist[index].likecount - 1
+          this.commentlist[index].islike = true
+      }
+        let params = this.commentlist[index]
+        likeComment(params).then(res => {
+          console.log(res)
+        })
 
+    }
   },
   created () {
     this.getHomeList()
@@ -420,5 +486,8 @@ export default{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+  }
+  .commentlike{
+    color:#FA7A1F;
   }
 </style>

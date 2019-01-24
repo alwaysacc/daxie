@@ -19,7 +19,7 @@ export const addArticle = (params) => {
 export const getHomeList = (params) => {
   return http.fetchPost('/article/list', params)
 }
-// 文章点赞
+// 文章de 点赞和取消点赞
 export const addlike = (params) => {
   return http.fetchPost('/article/update', params)
 }
@@ -34,6 +34,10 @@ export const addComment = (params) => {
 // 查看文章评论
 export const getCommentList = (params) => {
   return http.fetchPost('/comments/getCommentList', params)
+}
+//评论点赞，评论的赞不可取消
+export const likeComment = (params) => {
+  return http.fetchPost('/comments/update', params)
 }
 // 提问
 export const addProblem = (params) => {
