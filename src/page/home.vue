@@ -145,7 +145,7 @@ export default{
   methods: {
     // 查看全文
     seeAll (index) {
-      this.articlelist[index].seeall=!this.articlelist[index].seeall
+      this.articlelist[index].seeall = !this.articlelist[index].seeall
     },
     pinglun (index, articleid) {
       console.log(articleid)
@@ -165,11 +165,21 @@ export default{
     },
     // 点赞
     like (index) {
-      console.log(this.articlelist[index].likeid)
-      if (this.articlelist[index].likeid === '') {
-        this.articlelist[index].likeid = this.$store.state.user.userid
+      var uid = this.$store.state.user.userid
+      if (this.articlelist[index].islike) {
+        if (this.articlelist[index].likeid === '') {
+          this.articlelist[index].likeid = this.$store.state.user.userid
+        } else {
+          this.articlelist[index].likeid = this.articlelist[index].likeid + ',' + this.$store.state.user.userid
+        }
+        this.articlelist[index].likecount = this.articlelist[index].likecount + 1
       } else {
-        this.articlelist[index].likeid = this.articlelist[index].likeid + ',' + this.$store.state.user.userid
+        if (this.articlelist[index].likeid.indexOf(uid) === 0) {
+          this.articlelist[index].likeid = this.articlelist[index].likeid.replace(uid + ',', '')
+        } else {
+          this.articlelist[index].likeid = this.articlelist[index].likeid.replace(','+uid, '')
+        }
+        this.articlelist[index].likecount = this.articlelist[index].likecount - 1
       }
       let params = this.articlelist[index]
       addlike(params).then(res => {
@@ -202,10 +212,14 @@ export default{
           for (let i = 0; i < len; i++) {
             this.$set(this.articlelist[i], 'seeall', true)
             this.$set(this.articlelist[i], 'comments', false)
-            if (this.articlelist[i].likeid.search(uid) !== -1) {
-              this.$set(this.articlelist[i], 'islike', false)
-            }else{
+            if (this.articlelist[i].likeid === '') {
               this.$set(this.articlelist[i], 'islike', true)
+            } else {
+              if (this.articlelist[i].likeid.indexOf(uid) !== -1) {
+                this.$set(this.articlelist[i], 'islike', false)
+              } else {
+                this.$set(this.articlelist[i], 'islike', true)
+              }
             }
           }
           console.log(this.articlelist[0].likeid.search(uid))
