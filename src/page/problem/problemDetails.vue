@@ -60,7 +60,7 @@
               </el-col>
             </el-row>
             <el-row class="answer-bottom">
-              <a>点赞</a>
+              <a @click="replyLike(index)">{{repl.likecount}}点赞</a>
               <a @click="pinglun(index,repl.replyid)"> {{repl.comments? '收起评论':'评论'}}</a>
               <a>分享</a>
               <a>收藏</a>
@@ -87,7 +87,7 @@
                     <el-row class="a sjdiv">
                       <a>{{comment.createtime | getDate}}</a>
                       <a class="dianzan">回复</a>
-                      <a class="dianzan">点赞</a>
+                      <a class="dianzan" @click="likeComment(index)">{{comment.likecount}}点赞</a>
                     </el-row>
                   </div>
 
@@ -132,7 +132,7 @@
 <script>
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
-import {addReply, getReplyList, addComment, getCommentList} from '../../util/http'
+import {addReply, getReplyList, addComment, getCommentList, replyLike,likeComment} from '../../util/http'
 
 export default {
   name: 'problemDetails',
@@ -160,18 +160,70 @@ export default {
   },
   methods: {
     pinglun (index, replyid) {
+      this.replyList[index].comments = !this.replyList[index].comments
+      this.getCommentList(index, replyid)
+    },
+    getCommentList(index, replyid){
       let params = {
         forid: replyid
+      }
+      var uid
+      if (this.$store.state.user === null) {
+        uid = ''
+      } else {
+        uid = this.$store.state.user.userid
       }
       // 获取评论
       getCommentList(params).then(res => {
         console.log(res)
         if (res.code === 200) {
-          this.replyList[index].comments=!this.replyList[index].comments
           this.commentlist = res.data
+          let len = this.commentlist.length
+          for (let i = 0; i < len; i++) {
+            console.log(this.commentlist[i].likeid)
+            if (this.commentlist[i].likeid === null) {
+              this.$set(this.commentlist[i], 'islike', true)
+            } else {
+              if (uid === '') {
+                this.$set(this.commentlist[i], 'islike', true)
+              } else {
+                if (this.commentlist[i].likeid.indexOf(uid) !== -1) {
+                  this.$set(this.commentlist[i], 'islike', false)
+                } else {
+                  this.$set(this.commentlist[i], 'islike', true)
+                }
+              }
+            }
+          }
         } else {
 
         }
+      })
+    },
+    likeComment (index) {
+      var uid = this.$store.state.user.userid
+      console.log(uid)
+      // 点赞
+      if (this.commentlist[index].islike) {
+        if (this.commentlist[index].likeid === null) {
+          this.commentlist[index].likeid = this.$store.state.user.userid
+        } else {
+          this.commentlist[index].likeid = this.commentlist[index].likeid + ',' + this.$store.state.user.userid
+        }
+        this.commentlist[index].likecount = this.commentlist[index].likecount + 1
+        this.commentlist[index].islike = false
+      } else {
+        if (this.commentlist[index].likeid.indexOf(uid) === 0) {
+          this.commentlist[index].likeid = this.commentlist[index].likeid.replace(uid , '')
+        } else {
+          this.commentlist[index].likeid = this.commentlist[index].likeid.replace(',' + uid, '')
+        }
+        this.commentlist[index].likecount = this.commentlist[index].likecount - 1
+        this.commentlist[index].islike = true
+      }
+      let params = this.commentlist[index]
+      likeComment(params).then(res => {
+        console.log(res)
       })
     },
     fsbutton () {
@@ -198,20 +250,69 @@ export default {
         if (res.code === 200) {}
       })
     },
+    // 获取回答列表
     getReplyList () {
       let params = {
         problemid: this.problem.problemid
       }
+      var uid
+      if (this.$store.state.user === null) {
+        uid = ''
+      } else {
+        uid = this.$store.state.user.userid
+      }
+      // 获取回答列表
       getReplyList(params).then(res => {
         if (res.code === 200) {
           this.replyList = res.data
           let len = this.replyList.length
           for (let i = 0; i < len; i++) {
+            this.$set(this.replyList[i], 'seeall', true)
             this.$set(this.replyList[i], 'comments', false)
+            if (this.replyList[i].likeid === null) {
+              this.$set(this.replyList[i], 'islike', true)
+            } else {
+              if (uid === '') {
+                this.$set(this.replyList[i], 'islike', true)
+              } else {
+                if (this.replyList[i].likeid.indexOf(uid) !== -1) {
+                  this.$set(this.replyList[i], 'islike', false)
+                } else {
+                  this.$set(this.replyList[i], 'islike', true)
+                }
+              }
+            }
           }
         } else {
           console.log(res.message)
         }
+      })
+    },
+    // 回答点赞和取消点赞
+    replyLike (index) {
+      var uid = this.$store.state.user.userid
+      // 点赞
+      if (this.replyList[index].islike) {
+        if (this.replyList[index].likeid === null) {
+          this.replyList[index].likeid = this.$store.state.user.userid
+        } else {
+          this.replyList[index].likeid = this.replyList[index].likeid + ',' + this.$store.state.user.userid
+        }
+        this.replyList[index].likecount = this.replyList[index].likecount + 1
+        this.replyList[index].islike = false
+      } else {
+        if (this.replyList[index].likeid.indexOf(uid) === 0) {
+          this.replyList[index].likeid = this.replyList[index].likeid.replace(uid, '')
+        } else {
+          this.replyList[index].likeid = this.replyList[index].likeid.replace(',' + uid, '')
+        }
+        this.replyList[index].likecount = this.replyList[index].likecount - 1
+        this.replyList[index].islike = true
+      }
+      let params = this.replyList[index]
+      replyLike(params).then(res => {
+        console.log(res)
+        this.getReplyList()
       })
     },
     // 添加评论
@@ -268,6 +369,9 @@ export default {
     overflow-y: auto;
     margin-bottom: 100px;
     padding:0 20%;
+  }
+  #problemDetails a{
+    cursor:pointer
   }
   .edit{
    background-color: white;

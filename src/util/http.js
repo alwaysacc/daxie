@@ -35,7 +35,7 @@ export const addComment = (params) => {
 export const getCommentList = (params) => {
   return http.fetchPost('/comments/getCommentList', params)
 }
-//评论点赞，评论的赞不可取消
+// 评论点赞，评论的赞不可取消
 export const likeComment = (params) => {
   return http.fetchPost('/comments/update', params)
 }
@@ -50,6 +50,10 @@ export const getRecommendProblem = (params) => {
 // 问题详情页，获取回答
 export const getReplyList = (params) => {
   return http.fetchPost('/reply/getReply', params)
+}
+// 回答点赞
+export const replyLike = (params) => {
+  return http.fetchPost('/reply/update', params)
 }
 // 回答问题
 export const addReply = (params) => {

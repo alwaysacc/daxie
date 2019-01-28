@@ -69,6 +69,7 @@ export default {
           let params = this.user
           login(params).then(res => {
             if (res.code === 200) {
+              console.log(res)
               this.$message({
                 type: 'success',
                 message: `登录成功`

@@ -8,8 +8,7 @@ const store = new Vuex.Store({
   state () {
     return {
       islogin:true,
-      user: null,
-      count: 1
+      user: null
     }
   },
   getters: {

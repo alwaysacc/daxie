@@ -105,7 +105,7 @@ export default {
   data () {
     return {
       activeName: 'first',
-      recommendProblemList:{}
+      recommendProblemList: {}
     }
   },
   methods: {

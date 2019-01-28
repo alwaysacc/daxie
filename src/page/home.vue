@@ -153,7 +153,7 @@ export default{
       this.getCommentList(articleid)
       this.$set(this.articlelist[index], 'comments', !this.articlelist[index].comments)
     },
-
+    // 获取评论列表
     getCommentList (articleid) {
       let params = {
         forid: articleid
@@ -172,7 +172,7 @@ export default{
           let len = this.commentlist.length
           for (let i = 0; i < len; i++) {
             console.log(this.commentlist[i].likeid)
-            if (this.commentlist[i].likeid === '') {
+            if (this.commentlist[i].likeid === null) {
               this.$set(this.commentlist[i], 'islike', true)
             } else {
               if (uid === '') {
@@ -197,7 +197,7 @@ export default{
       var uid = this.$store.state.user.userid
       // 点赞
       if (this.articlelist[index].islike) {
-        if (this.articlelist[index].likeid === '') {
+        if (this.articlelist[index].likeid === null) {
           this.articlelist[index].likeid = this.$store.state.user.userid
         } else {
           this.articlelist[index].likeid = this.articlelist[index].likeid + ',' + this.$store.state.user.userid
@@ -249,7 +249,7 @@ export default{
           for (let i = 0; i < len; i++) {
             this.$set(this.articlelist[i], 'seeall', true)
             this.$set(this.articlelist[i], 'comments', false)
-            if (this.articlelist[i].likeid === '') {
+            if (this.articlelist[i].likeid === null) {
               this.$set(this.articlelist[i], 'islike', true)
             } else {
               if (uid === '') {
@@ -263,7 +263,6 @@ export default{
               }
             }
           }
-          console.log(this.articlelist[0].likeid.search(uid))
         } else {
 
         }
@@ -306,7 +305,7 @@ export default{
       console.log(uid)
       // 点赞
       if (this.commentlist[index].islike) {
-        if (this.commentlist[index].likeid === '') {
+        if (this.commentlist[index].likeid === null) {
           this.commentlist[index].likeid = this.$store.state.user.userid
         } else {
           this.commentlist[index].likeid = this.commentlist[index].likeid + ',' + this.$store.state.user.userid

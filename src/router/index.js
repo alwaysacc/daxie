@@ -12,7 +12,7 @@ import userHome from '../page/user/userHome'
 import userData from '@/page/user/userData'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     // 首页
     {
@@ -30,7 +30,10 @@ export default new Router({
     {
       path: '/addArticle',
       name: 'addArticle',
-      component: addArticle
+      component: addArticle,
+      meta: {
+        requireAuth: true
+      }
     },
     // 问答首页
     {
@@ -77,3 +80,18 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(res => res.meta.requireAuth)) { // 判断是否需要登录权限
+    if (localStorage.getItem('islogin')) { // 判断是否登录
+      next()
+    } else { // 没登录则跳转到登录界面
+      next({
+        path: '/Login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
+})
+export default router
