@@ -1,23 +1,19 @@
 <template>
 <div id="userData">
   <div class="center">
-    <el-row class="row">
+    <el-row class="row1">
       <el-col :span="4">头像:</el-col>
       <el-col :span="8">
-        <a class="btn">设置头像</a>
-        <my-upload field="img"
-                   @crop-success="cropSuccess"
-                   @crop-upload-success="cropUploadSuccess"
-                   @crop-upload-fail="cropUploadFail"
-                   v-model="show"
-                   :width="100"
-                   :height="100"
-                   url="/upload"
-                   :params="params"
-                   :headers="headers"
-                   img-format="png"></my-upload>
-        <img  src="@/image/1.jpg"  @click="toggleShow">
-       </el-col>
+        <el-upload
+          class="avatar-uploader"
+          action="upload"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-col>
     </el-row>
    <el-row class="row">
      <el-col :span="4">用户名:</el-col>
@@ -58,57 +54,28 @@ export default {
   name: 'userData',
   data () {
     return {
-      show: true,
-      params: {
-        token: '123456798',
-        name: 'avatar'
-      },
-      headers: {
-        smail: '*_~'
-      },
-      imgDataUrl: '' // the datebase64 url of created image
+      imgUrl: '' // the datebase64 url of created image
     }
   },
   components: {
     myUpload
   },
   methods: {
-    toggleShow () {
-      this.show = !this.show
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
     },
-    /**
-       * crop success
-       *
-       * [param] imgDataUrl
-       * [param] field
-       */
-    cropSuccess (imgDataUrl, field) {
-      console.log('-------- crop success --------')
-      this.imgDataUrl = imgDataUrl
-    },
-    /**
-       * upload success
-       *
-       * [param] jsonData   服务器返回数据，已进行json转码
-       * [param] field
-       */
-    cropUploadSuccess (jsonData, field) {
-      console.log('-------- upload success --------')
-      console.log(jsonData)
-      console.log('field: ' + field)
-    },
-    /**
-       * upload fail
-       *
-       * [param] status    server api return error status, like 500
-       * [param] field
-       */
-    cropUploadFail (status, field) {
-      console.log('-------- upload fail --------')
-      console.log(status)
-      console.log('field: ' + field)
-    }
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
 
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    }
   }
 }
 </script>
@@ -123,6 +90,9 @@ export default {
     font-size: 16px;
     margin: 0 20%;
   }
+  .row1{
+
+  }
   .center {
     width: 100%;
     background-color: white;
@@ -131,10 +101,30 @@ export default {
   }
   .center .row{
     padding-left: 30px;
-    height: 50px;
     width: 100%;
-    line-height: 50px;
     padding-top: 10px;
   }
-
+  el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

@@ -153,7 +153,6 @@ export default{
       this.getCommentList(articleid)
       this.$set(this.articlelist[index], 'comments', !this.articlelist[index].comments)
     },
-    // 获取评论列表
     getCommentList (articleid) {
       let params = {
         forid: articleid
