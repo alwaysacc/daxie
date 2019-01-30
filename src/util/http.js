@@ -71,3 +71,8 @@ export const follew = (params) => {
 export const cancelFollew = (params) => {
   return http.fetchPost('/relation/update', params)
 }
+// 上传头像
+export const uploadIamae = (params) => {
+  console.log(params)
+  return http.fetchPost('/user/uploadIamae', params)
+}

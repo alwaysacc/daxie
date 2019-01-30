@@ -4,15 +4,19 @@
     <el-row class="row1">
       <el-col :span="4">头像:</el-col>
       <el-col :span="8">
-        <el-upload
-          class="avatar-uploader"
-          action="upload"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <a class="btn" >设置头像</a>
+        <my-upload field="img"
+                   @crop-success="cropSuccess"
+                   @crop-upload-success="cropUploadSuccess"
+                   @crop-upload-fail="cropUploadFail"
+                   v-model="show"
+                   :width="200"
+                   :height="200"
+                   url="http://localhost:8080/user/uploadIamae"
+                   :params="params"
+                   img-format="png">
+        </my-upload>
+        <img :src="imgDataUrl" @click="toggleShow">
       </el-col>
     </el-row>
    <el-row class="row">
@@ -50,31 +54,56 @@
 <script>
 import 'babel-polyfill' // es6 shim
 import myUpload from 'vue-image-crop-upload'
+import {uploadIamae} from '../../util/http'
 export default {
   name: 'userData',
   data () {
     return {
-      imgUrl: '' // the datebase64 url of created image
+      show: false,
+      params: this.$store.state.user,
+      imgDataUrl: require( 'D:/image/newPIC.jpg')
     }
   },
   components: {
-    myUpload
+    'my-upload': myUpload
   },
   methods: {
-    handleAvatarSuccess (res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
+    toggleShow () {
+      this.show = !this.show
     },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
+    /**
+     * crop success
+     *
+     * [param] imgDataUrl
+     * [param] field
+     */
+    cropSuccess (imgDataUrl, field) {
+      console.log('-------- crop success --------')
+      this.imgDataUrl = imgDataUrl
+      console.log(imgDataUrl)
+      console.log(field)
+    },
+    /**
+     * upload success
+     *
+     * [param] jsonData   服务器返回数据，已进行json转码
+     * [param] field
+     */
+    cropUploadSuccess (jsonData, field) {
+      console.log('-------- upload success --------')
+      console.log(jsonData)
+      console.log('field: ' + field)
+    },
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+    cropUploadFail (status, field) {
+      console.log('-------- upload fail --------')
+      console.log(status)
+      console.log('field: ' + field)
     }
   }
 }
@@ -91,40 +120,22 @@ export default {
     margin: 0 20%;
   }
   .row1{
-
+    padding-left: 30px;
+    width: 100%;
+    line-height: 100px;
   }
   .center {
     width: 100%;
     background-color: white;
     margin-top: 20px;
-    height:600px;
   }
   .center .row{
     padding-left: 30px;
     width: 100%;
     padding-top: 10px;
   }
-  el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+ img{
+   width: 80px;
+   height: 80px;
+ }
 </style>
