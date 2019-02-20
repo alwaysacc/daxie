@@ -77,7 +77,7 @@ export default {
               this.$store.commit('$setStat', false)
               this.$store.commit('$setUser', res.data)
               console.log(this.$store.state.user)
-              console.log(this.$store.state.islogin)
+              console.log( this.$store.state.user.userimage)
               this.toHome()
             } else {
               this.$message({

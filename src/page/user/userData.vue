@@ -61,7 +61,7 @@ export default {
     return {
       show: false,
       params: this.$store.state.user,
-      imgDataUrl: require( 'D:/image/newPIC.jpg')
+      imgDataUrl: 'pn7mfwsqh.bkt.clouddn.com/tx2019119115750454.jpg'
     }
   },
   components: {
@@ -82,6 +82,7 @@ export default {
       this.imgDataUrl = imgDataUrl
       console.log(imgDataUrl)
       console.log(field)
+      console.log(this.$store.state.user)
     },
     /**
      * upload success
