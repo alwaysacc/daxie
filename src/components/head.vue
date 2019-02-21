@@ -26,7 +26,7 @@
             <el-col :span="2"  v-if="this.$store.state.islogin">
               <el-menu-item index="5" class="login"><router-link to="/register">注册</router-link></el-menu-item>
             </el-col>
-            <el-col :span="4" v-if="!this.$store.state.islogin"> <router-link to="/userHome"><el-menu-item index="6" class="login"><img src="../image/img.jpg"/>{{this.$store.state.user.username }}</el-menu-item></router-link></el-col>
+            <el-col :span="4" v-if="!this.$store.state.islogin"> <router-link to="/userHome"><el-menu-item index="6" class="login"><img :src="this.$store.state.user.userimage" class="touxiang"/>{{this.$store.state.user.username }}</el-menu-item></router-link></el-col>
           </el-row>
         </el-menu>
       </el-col>
@@ -62,11 +62,12 @@ export default {
     font-size: 30px;
 
   }
-  .login{
-
-  }
   .login .xiaoxi{
     height:50%;
     width: 100%;
+  }
+  .touxiang{
+    height:50%;
+    width: 30%;
   }
 </style>

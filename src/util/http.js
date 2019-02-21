@@ -74,5 +74,5 @@ export const cancelFollew = (params) => {
 // 上传头像
 export const uploadIamae = (params) => {
   console.log(params)
-  return http.fetchPost('/user/uploadIamae', params)
+  return http.fetchPost('/user/uploadImage', params)
 }

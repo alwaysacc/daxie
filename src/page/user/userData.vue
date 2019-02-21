@@ -12,7 +12,7 @@
                    v-model="show"
                    :width="200"
                    :height="200"
-                   url="http://localhost:8080/user/uploadIamae"
+                   url="http://localhost:8080/user/uploadImage"
                    :params="params"
                    img-format="png">
         </my-upload>
@@ -54,14 +54,13 @@
 <script>
 import 'babel-polyfill' // es6 shim
 import myUpload from 'vue-image-crop-upload'
-import {uploadIamae} from '../../util/http'
 export default {
   name: 'userData',
   data () {
     return {
       show: false,
       params: this.$store.state.user,
-      imgDataUrl: 'pn7mfwsqh.bkt.clouddn.com/tx2019119115750454.jpg'
+      imgDataUrl: this.$store.state.user.userimage
     }
   },
   components: {
@@ -90,10 +89,13 @@ export default {
      * [param] jsonData   服务器返回数据，已进行json转码
      * [param] field
      */
-    cropUploadSuccess (jsonData, field) {
+    cropUploadSuccess (res, field) {
       console.log('-------- upload success --------')
-      console.log(jsonData)
-      console.log('field: ' + field)
+      console.log(res)
+      if (res.code === 200) {
+        this.$store.state.user.userimage = res.data
+      }
+      console.log(this.$store.state.user.userimage)
     },
     /**
      * upload fail
